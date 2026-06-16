@@ -127,24 +127,25 @@
   .audio-toggle svg { width: 13px; height: 13px; }
 
   /* ── Page header / hero ── */
-  .page-head { padding: 40px 0 28px; border-bottom: 1px solid var(--rule); margin-bottom: 28px; }
-  .page-head .kicker { color: var(--gold-text); font-size: 11px; margin-bottom: 10px; }
+  .page-head { padding: 18px 0 14px; border-bottom: none; margin-bottom: 14px; }
+  .page-head .kicker { color: var(--gold-text); font-size: 11px; margin-bottom: 6px; }
   .page-head h1 {
-    margin: 0 0 12px;
+    margin: 0 0 6px;
     font-family: 'Crimson Pro', serif;
-    font-size: 36px; font-weight: 600; letter-spacing: -0.01em;
+    font-size: 26px; font-weight: 600; letter-spacing: -0.01em;
     color: var(--ink);
   }
-  .page-head p { margin: 0; color: var(--muted); font-size: 16px; max-width: 56ch; }
+  .page-head p { margin: 0; color: var(--muted); font-size: 14px; max-width: 56ch; }
 
-  /* ── Transcript ── */
+  /* ── Transcript: klar umrahmtes Chat-Fenster ── */
   .chat-area {
-    padding: 0; min-height: 280px; display: flex; flex-direction: column;
-    max-height: 58vh; overflow-y: auto; padding-right: 6px; margin-right: -6px;
+    padding: 18px 20px; min-height: 320px; display: flex; flex-direction: column;
+    max-height: 62vh; overflow-y: auto;
+    border: 1px solid var(--rule); border-radius: 6px; background: var(--paper-2);
   }
   .chat-area::-webkit-scrollbar { width: 5px; }
   .chat-area::-webkit-scrollbar-thumb { background: var(--rule); border-radius: 99px; }
-  .empty { padding: 8px 0 36px; color: var(--muted); }
+  .empty { padding: 8px 0 12px; color: var(--muted); }
   .empty .big { font-family: 'Crimson Pro', serif; font-size: 21px; color: var(--ink); margin-bottom: 6px; font-weight: 600; }
   .empty .small { font-size: 14px; }
 
@@ -165,7 +166,7 @@
     transition: border-color 0.15s ease, color 0.15s ease;
   }
   .turn .who .play:hover { color: var(--gold-text); border-bottom-color: var(--gold-text); }
-  .turn.playing { background: var(--paper-2); margin: 0 -16px; padding: 18px 16px; border-radius: 2px; }
+  .turn.playing { background: var(--paper); margin: 0 -16px; padding: 18px 16px; border-radius: 2px; box-shadow: inset 2px 0 0 var(--gold); }
   .source { font-weight: 700; }
   .source.ai { color: var(--blue-text); }
   .source.fb { color: var(--muted); }
