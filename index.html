@@ -35,9 +35,55 @@
   a { color: var(--gold-text); }
   ::selection { background: var(--gold); color: var(--ink); }
   .masthead-bar { height: 4px; background: var(--gold); }
-  .container { max-width: 700px; margin: 0 auto; padding: 0 24px; }
+  .container { max-width: 980px; margin: 0 auto; padding: 0 24px; }
   button { cursor: pointer; font-family: inherit; }
   .small-caps { text-transform: uppercase; letter-spacing: 0.09em; font-weight: 700; }
+
+  /* ── Logo-Wasserzeichen ── */
+  .page-head { position: relative; overflow: hidden; }
+  .page-head::before {
+    content: ""; position: absolute; top: -10px; right: -30px;
+    width: 420px; height: 270px; pointer-events: none; z-index: 0;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 171 109.737'%3E%3Cpath d='M.328,0V4.4H158.908L127.036,17.6H.328V22H116.411L84.541,35.2H.328v4.4h73.59L-.594,70.467,1.09,74.532,85.417,39.6h30.995L-.594,88.069,1.09,92.135,127.91,39.6h31L-.594,105.672l1.684,4.066L170.406,39.6V35.2H138.534L170.406,22V17.6H138.534L170.406,4.4V0ZM127.91,22h31l-31.87,13.2h-31Z' transform='translate(0.594)' fill='%23C8973A'/%3E%3C/svg%3E");
+    background-repeat: no-repeat; background-size: contain;
+    opacity: 0.07;
+  }
+  .page-head > * { position: relative; z-index: 1; }
+
+  /* ── Zweispaltiges Layout: Sidebar + Hauptbereich ── */
+  .layout { display: grid; grid-template-columns: 250px 1fr; gap: 0 48px; align-items: start; }
+  .sidebar { padding: 32px 0; border-right: 1px solid var(--rule); }
+  .sidebar .kicker { color: var(--muted); font-size: 11px; display: block; margin-bottom: 14px; }
+  .sidebar details { border-bottom: 1px solid var(--rule); }
+  .sidebar summary {
+    list-style: none; cursor: pointer; padding: 12px 0;
+    font-size: 13px; font-weight: 700; letter-spacing: 0.02em; color: var(--ink);
+    display: flex; justify-content: space-between; align-items: center; gap: 8px;
+  }
+  .sidebar summary::-webkit-details-marker { display: none; }
+  .sidebar summary::after { content: "+"; color: var(--gold-text); font-weight: 700; font-size: 15px; }
+  .sidebar details[open] summary::after { content: "−"; }
+  .sidebar summary:hover { color: var(--gold-text); }
+  .sidebar .panel-body { padding: 0 0 16px; font-size: 13.5px; color: var(--muted); line-height: 1.6; }
+  .sidebar .panel-body p { margin: 0 0 10px; }
+  .sidebar .panel-body a { text-decoration: underline; }
+  .curr-table { width: 100%; border-collapse: collapse; font-size: 12px; margin-top: 4px; }
+  .curr-table th { text-align: left; color: var(--ink); font-weight: 700; padding: 5px 4px; border-bottom: 1px solid var(--rule); }
+  .curr-table td { padding: 5px 4px; border-bottom: 1px solid var(--rule); vertical-align: top; }
+  .curr-table tr:last-child td { border-bottom: none; }
+  .sidebar .qlink {
+    display: block; width: 100%; text-align: left; background: none; border: none; padding: 5px 0;
+    font-size: 13px; color: var(--muted); font-family: inherit;
+    transition: color 0.15s ease;
+  }
+  .sidebar .qlink:hover { color: var(--gold-text); }
+
+  .main { min-width: 0; padding-bottom: 24px; }
+
+  @media (max-width: 860px) {
+    .layout { grid-template-columns: 1fr; }
+    .sidebar { border-right: none; border-bottom: 1px solid var(--rule); padding: 20px 0; }
+  }
 
   /* ── Header ── */
   header.site {
@@ -107,17 +153,15 @@
   .typing-text .cursor { display: inline-block; animation: blink 1s steps(1) infinite; }
   @keyframes blink { 0%, 49% { opacity: 1; } 50%, 100% { opacity: 0; } }
 
-  /* ── Suggested questions ── */
-  .chips-wrap { padding: 22px 0; border-bottom: 1px solid var(--rule); }
-  .chips-wrap .kicker { color: var(--muted); font-size: 11px; margin-bottom: 10px; display: block; }
-  .chips { display: flex; flex-wrap: wrap; gap: 0 16px; }
+  /* ── Vorschlagsfragen (jetzt in der Sidebar) ── */
+  .chips { display: flex; flex-direction: column; gap: 0; }
   .chip {
-    background: none; border: none; padding: 4px 0;
-    font-size: 14px; font-family: 'Atkinson Hyperlegible', sans-serif; color: var(--ink);
-    border-bottom: 1px solid var(--rule);
-    transition: border-color 0.15s ease, color 0.15s ease;
+    background: none; border: none; padding: 6px 0;
+    font-size: 13px; font-family: 'Atkinson Hyperlegible', sans-serif; color: var(--muted);
+    text-align: left; border-bottom: none;
+    transition: color 0.15s ease;
   }
-  .chip:hover { color: var(--gold-text); border-bottom-color: var(--gold-text); }
+  .chip:hover { color: var(--gold-text); }
 
   /* ── Composer ── */
   .composer { display: flex; gap: 14px; align-items: flex-end; padding: 22px 0 10px; }
@@ -183,37 +227,85 @@
 </header>
 
 <div class="container">
+  <div class="layout">
 
-  <div class="page-head">
-    <span class="kicker small-caps">Interview · Master Industrial Management</span>
-    <h1>Fragen Sie Prof. Volz</h1>
-    <p>Der Chatbot beantwortet Fragen zum Master Industrial Management — in der Stimme von Prof. Dr. Raphael Volz.</p>
+    <aside class="sidebar">
+      <span class="kicker small-caps">Quick-Infos</span>
+
+      <details>
+        <summary>Studienverlauf</summary>
+        <div class="panel-body">
+          <p>Idealtypischer Studienverlauf M.Sc. Industrial Management (PO 2024):</p>
+          <table class="curr-table">
+            <tr><th>Sem.</th><th>Modul</th><th>SWS</th><th>CP</th></tr>
+            <tr><td>1</td><td>Leadership</td><td>4</td><td>6</td></tr>
+            <tr><td>1</td><td>Vernetzte Systeme &amp; KI</td><td>4</td><td>6</td></tr>
+            <tr><td>1</td><td>Forschungsmethoden &amp; Innovation</td><td>4</td><td>6</td></tr>
+            <tr><td>1–2</td><td>Interdiszipl. Innovationsprojekt</td><td>6</td><td>9</td></tr>
+            <tr><td>1–2</td><td>Wahlpflichtfächer „Fokus"</td><td>6</td><td>9</td></tr>
+            <tr><td>1–2</td><td>Major Industrial Management I</td><td>4</td><td>6</td></tr>
+            <tr><td>1–2</td><td>Major (Engineering/Business/IM II)</td><td>4</td><td>6</td></tr>
+            <tr><td>2</td><td>Technologiemgmt. &amp; Verhandlung</td><td>4</td><td>6</td></tr>
+            <tr><td>2</td><td>Prozesse &amp; Daten</td><td>4</td><td>6</td></tr>
+            <tr><td>3</td><td>Capstone</td><td>4</td><td>6</td></tr>
+            <tr><td>3</td><td>Master-Thesis</td><td>—</td><td>24</td></tr>
+          </table>
+        </div>
+      </details>
+
+      <details>
+        <summary>Bewerbung &amp; Fristen</summary>
+        <div class="panel-body">
+          <p>Bewerbungsschluss Sommersemester: <strong>15. Januar</strong>. Wintersemester: <strong>15. Juni</strong>. Zulassung per Auswahlverfahren, 24 Studienplätze.</p>
+          <p><a href="https://campus.hs-pforzheim.de/qisserver/pages/psv/selbstregistrierung/pub/selbstregistrierung.xhtml" target="_blank" rel="noopener">Zum Bewerbungsportal ↗</a></p>
+        </div>
+      </details>
+
+      <details>
+        <summary>Kontakte</summary>
+        <div class="panel-body">
+          <p><strong>Prof. Dr. Ansgar Kühn</strong> (Studiengangleiter)<br>Raum T1.5.23 · Mi 9:45–11:15<br>Tel. 07231 28-6490</p>
+          <p><strong>Lisa Kaiser</strong> (Koordination)<br>Raum T1.5.21 · Tel. 07231 28-6472</p>
+          <p>Sekretariat WI: Tel. 07231 28-6056</p>
+        </div>
+      </details>
+
+      <details open>
+        <summary>Themen schnell fragen</summary>
+        <div class="panel-body">
+          <div class="chips" id="suggestions">
+            <button class="chip" data-q="capstone">Capstone-Aufgabe</button>
+            <button class="chip" data-q="studienverlauf">Studienverlauf</button>
+            <button class="chip" data-q="majors">Majors 7a/7b/7c</button>
+            <button class="chip" data-q="english">English Track</button>
+            <button class="chip" data-q="seminarb">Seminar IM B</button>
+            <button class="chip" data-q="thesis">Master-Thesis</button>
+          </div>
+        </div>
+      </details>
+    </aside>
+
+    <main class="main">
+      <div class="page-head">
+        <span class="kicker small-caps">Interview · Master Industrial Management</span>
+        <h1>Fragen Sie Prof. Volz</h1>
+        <p>Der Chatbot beantwortet Fragen zum Master Industrial Management — in der Stimme von Prof. Dr. Raphael Volz.</p>
+      </div>
+
+      <div class="chat-area" id="chat" role="log" aria-live="polite"></div>
+
+      <form class="composer" id="form">
+        <textarea id="input" placeholder="Ihre Frage …" rows="1" autocomplete="off" aria-label="Frage eingeben"></textarea>
+        <button type="submit" class="send-btn" id="send" disabled aria-label="Nachricht senden">Senden →</button>
+      </form>
+
+      <div class="panel-foot">
+        <button id="stopAudio" aria-label="Audiowiedergabe stoppen">Audio stoppen</button>
+        <button id="resetChat" aria-label="Unterhaltung zurücksetzen">Zurücksetzen</button>
+      </div>
+    </main>
+
   </div>
-
-  <div class="chat-area" id="chat" role="log" aria-live="polite"></div>
-
-  <div class="chips-wrap">
-    <span class="kicker small-caps">Vorschläge</span>
-    <div class="chips" id="suggestions">
-      <button class="chip" data-q="capstone">Capstone-Aufgabe</button>
-      <button class="chip" data-q="studienverlauf">Studienverlauf</button>
-      <button class="chip" data-q="majors">Majors 7a/7b/7c</button>
-      <button class="chip" data-q="english">English Track</button>
-      <button class="chip" data-q="seminarb">Seminar IM B</button>
-      <button class="chip" data-q="thesis">Master-Thesis</button>
-    </div>
-  </div>
-
-  <form class="composer" id="form">
-    <textarea id="input" placeholder="Ihre Frage …" rows="1" autocomplete="off" aria-label="Frage eingeben"></textarea>
-    <button type="submit" class="send-btn" id="send" disabled aria-label="Nachricht senden">Senden →</button>
-  </form>
-
-  <div class="panel-foot">
-    <button id="stopAudio" aria-label="Audiowiedergabe stoppen">Audio stoppen</button>
-    <button id="resetChat" aria-label="Unterhaltung zurücksetzen">Zurücksetzen</button>
-  </div>
-
 </div>
 
 <footer class="site">
