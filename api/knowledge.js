@@ -120,4 +120,43 @@ Medizintechnik, Produktentwicklung).
 ## Hochschule Pforzheim allgemein
 Motto: "Fuehrend durch Perspektivenwechsel". Fakultaeten: Gestaltung, Technik,
 Wirtschaft & Recht. Hauptwebsite: hs-pforzheim.de.
+
+## Semestertermine (G = Gestaltung, T = Technik, WR = Wirtschaft und Recht)
+
+### Sommersemester 2026 (Stand 09.10.2024)
+Beginn SS 2026: 01.03.2026. Vorlesungsbeginn: 16.03.2026. Begruessung
+Erstsemester G+T+WR: 16./17.03.2026. Vorlesungsbeginn Erstsemester G, T, WR:
+18.03.2026. Osterferien: 02.04.-07.04.2026 (vorlesungsfrei). Exkursionswoche:
+04.05.-08.05.2026. Christi Himmelfahrt: 14.05.2026 (vorlesungsfrei).
+Pfingstferien G+T+WR: 25.05.-29.05.2026 (vorlesungsfrei). Fronleichnam:
+04.06.2026 (vorlesungsfrei). Letzter Vorlesungstag: 26.06.2026. Klausuren G:
+29.06.-03.07.2026. Klausuren T und WR: 29.06.-10.07.2026. Ende des SS 2026:
+31.08.2026. Vorlesungszeit: 14 Wochen.
+
+### Wintersemester 2026/27 (Stand 19.05.2026)
+Beginn WS 2026/27: 01.09.2026. Vorlesungsbeginn: 05.10.2026. Begruessung
+Erstsemester G+T+WR: 05.10.2026. Allerheiligen: 01.11.2026 (vorlesungsfrei).
+Weihnachtsferien: 23.12.2026-06.01.2027 (vorlesungsfrei). Letzter
+Vorlesungstag: 22.01.2027. Klausuren G: 25.01.-29.01.2027. Klausuren T und WR:
+25.01.-05.02.2027. Ende des WS 2026/27: 28.02.2027. Vorlesungszeit: 15 Wochen.
+
+### Sommersemester 2027 (Stand 19.05.2026)
+Beginn SS 2027: 01.03.2027. Vorlesungsbeginn: 15.03.2027. Begruessung
+Erstsemester G+T+WR: 15.03.2027. Osterferien: 25.03.-30.03.2027
+(vorlesungsfrei). Exkursionswoche: 10.05.-14.05.2027. Christi Himmelfahrt:
+06.05.2027 (vorlesungsfrei). Pfingstferien G+T+WR: 18.05.-21.05.2027
+(vorlesungsfrei). Fronleichnam: 27.05.2027 (vorlesungsfrei). Letzter
+Vorlesungstag: 25.06.2027. Klausuren G: 28.06.-02.07.2027. Klausuren T und WR:
+28.06.-09.07.2027. Ende des SS 2027: 31.08.2027. Vorlesungszeit: 14 Wochen.
+
+### Wintersemester 2027/28 (Stand 25.03.2026)
+Beginn WS 2027/28: 01.09.2027. Vorlesungsbeginn: 04.10.2027. Begruessung
+Erstsemester G+T+WR: 04.10.2027. Allerheiligen: 01.11.2027 (vorlesungsfrei).
+Weihnachtsferien: 23.12.2027-07.01.2028 (vorlesungsfrei). Letzter
+Vorlesungstag: 28.01.2028. Klausuren G: 31.01.-04.02.2028. Klausuren T und WR:
+31.01.-11.02.2028. Ende des WS 2027/28: 28.02.2028. Vorlesungszeit: 14 Wochen.
+Beginn SS 2028: 01.03.2028. Vorlesungsbeginn SS 2028: 13.03.2028.
+
+Hinweis: Aenderungen an diesen Terminen vorbehalten, fuer den aktuellsten
+Stand auf das Studiengangsbuero verweisen.
 `;
