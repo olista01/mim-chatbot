@@ -11,27 +11,31 @@
 <style>
   :root {
     color-scheme: dark;
-    /* HSPF Brand Colors — dark editorial variant */
-    --hspf-gold:        #C8973A;
-    --hspf-gold-light:  #E8C878;
-    --hspf-gold-pale:   #2A2115;
+    /* HSPF Brand Colors — echte Hochschulfarben (aus hs-pforzheim.de CSS),
+       dark editorial variant */
+    --hspf-gold:        #FFBE31;
+    --hspf-gold-light:  #FFD978;
+    --hspf-gold-pale:   #2E2710;
     --hspf-dark:        #F3EAD6;
     --hspf-brown:       #C9BBA0;
     --hspf-cream:       #15110C;
     --hspf-surface:     #1B1611;
     --hspf-surface-2:   #221B14;
-    --hspf-border:      rgba(200, 151, 58, 0.16);
+    --hspf-border:      rgba(255, 190, 49, 0.16);
     --hspf-muted:       #8C7E6E;
-    --hspf-user-bg:     #C8973A;
+    --hspf-user-bg:     #FFBE31;
     --hspf-user-text:   #15110C;
-    --hspf-gold-hover:  #DCAE52;
-    --hspf-badge-text:  #E8C878;
+    --hspf-gold-hover:  #E5AA1E;
+    --hspf-badge-text:  #FFD978;
+    --hspf-blue:        #1934FF;
+    --hspf-blue-light:  #7C87FF;
+    --hspf-blue-pale:   rgba(25, 52, 255, 0.16);
   }
   * { box-sizing: border-box; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
   html { scroll-behavior: smooth; }
   body {
     margin: 0; padding: 0;
-    background: radial-gradient(ellipse 900px 500px at 50% -10%, rgba(200,151,58,0.16), transparent 60%), #0E0A06;
+    background: radial-gradient(ellipse 900px 500px at 50% -10%, rgba(255,190,49,0.16), transparent 60%), #0E0A06;
     min-height: 100vh;
     color: var(--hspf-dark);
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
@@ -142,14 +146,15 @@
     padding: 3px 10px; font-size: 11px; font-family: 'Inter', sans-serif; font-weight: 500;
     border-radius: 999px; transition: all 0.18s ease; display: inline-flex; align-items: center; gap: 5px;
   }
-  .msg.bot .who .play:hover { color: var(--hspf-gold-hover); border-color: var(--hspf-gold); background: rgba(200, 151, 58, 0.12); }
-  .msg.bot.playing { box-shadow: 0 0 0 2px rgba(200, 151, 58, 0.35); }
+  .msg.bot .who .play:hover { color: var(--hspf-gold-hover); border-color: var(--hspf-gold); background: rgba(255, 190, 49, 0.12); }
+  .msg.bot.playing { box-shadow: 0 0 0 2px rgba(255, 190, 49, 0.35); }
   .msg.bot .source {
     display: inline-block; font-size: 10px; font-weight: 500; letter-spacing: 0.04em;
     padding: 2px 8px; border-radius: 999px;
-    background: rgba(200, 151, 58, 0.16); color: var(--hspf-badge-text);
+    background: var(--hspf-border); color: var(--hspf-badge-text);
   }
   .msg.bot .source.fb { background: rgba(255,255,255,0.05); color: var(--hspf-muted); }
+  .msg.bot .source.ai { background: var(--hspf-blue-pale); color: var(--hspf-blue-light); }
   .msg.bot .body { font-family: 'DM Serif Display', serif; font-size: 16px; line-height: 1.75; color: var(--hspf-dark); }
 
   /* ── Typing indicator ── */
@@ -572,7 +577,7 @@ function addBot(text, audio, source, persist = true) {
   const who = document.createElement("div"); who.className = "who";
   const lbl = document.createElement("span"); lbl.textContent = "Prof. Volz"; who.appendChild(lbl);
   if (source) {
-    const s = document.createElement("span"); s.className = "source" + (source === "fallback" ? " fb" : "");
+    const s = document.createElement("span"); s.className = "source" + (source === "fallback" ? " fb" : source === "ai" ? " ai" : "");
     s.textContent = source === "match" ? "Aus Wissensbasis" : source === "ai" ? "KI-generiert" : "Außerhalb Wissensbasis";
     who.appendChild(s);
   }
