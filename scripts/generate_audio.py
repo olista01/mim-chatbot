@@ -16,6 +16,28 @@ from pathlib import Path
 os.environ.setdefault("COQUI_TOS_AGREED", "1")  # CPML: nur nicht-kommerzielle Nutzung, s. SETUP.md
 
 import imageio_ffmpeg
+import soundfile as sf
+import torch
+
+
+def _load_audio_via_soundfile(audiopath, sampling_rate):
+    """Ersetzt TTS.tts.models.xtts.load_audio (torchaudio.load), das auf
+    torchcodec + System-FFmpeg-DLLs angewiesen ist. soundfile braucht das nicht."""
+    data, lsr = sf.read(str(audiopath), dtype="float32", always_2d=True)
+    audio = torch.from_numpy(data.T)
+    if audio.size(0) != 1:
+        audio = torch.mean(audio, dim=0, keepdim=True)
+    if lsr != sampling_rate:
+        import torchaudio
+        audio = torchaudio.functional.resample(audio, lsr, sampling_rate)
+    if torch.any(audio > 10) or not torch.any(audio < 0):
+        print("Warnung: Referenzaudio scheint nicht normalisiert zu sein.")
+    audio.clip_(-1, 1)
+    return audio
+
+
+import TTS.tts.models.xtts as _xtts_module
+_xtts_module.load_audio = _load_audio_via_soundfile
 
 ROOT = Path(__file__).resolve().parent.parent
 FFMPEG = imageio_ffmpeg.get_ffmpeg_exe()

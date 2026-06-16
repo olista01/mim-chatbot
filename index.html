@@ -10,45 +10,52 @@
 <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root {
-    color-scheme: light;
-    /* HSPF Brand Colors */
+    color-scheme: dark;
+    /* HSPF Brand Colors — dark editorial variant */
     --hspf-gold:        #C8973A;
     --hspf-gold-light:  #E8C878;
-    --hspf-gold-pale:   #F5EDD8;
-    --hspf-dark:        #1A1410;
-    --hspf-brown:       #3D2B1A;
-    --hspf-cream:       #FAF8F4;
-    --hspf-surface:     #FFFFFF;
-    --hspf-border:      #E8E2D8;
+    --hspf-gold-pale:   #2A2115;
+    --hspf-dark:        #F3EAD6;
+    --hspf-brown:       #C9BBA0;
+    --hspf-cream:       #15110C;
+    --hspf-surface:     #1B1611;
+    --hspf-surface-2:   #221B14;
+    --hspf-border:      rgba(200, 151, 58, 0.16);
     --hspf-muted:       #8C7E6E;
-    --hspf-user-bg:     #1A1410;
-    --hspf-user-text:   #FAF8F4;
-    --hspf-gold-hover:  #A87A2A;
-    --hspf-badge-text:  #7A5A10;
+    --hspf-user-bg:     #C8973A;
+    --hspf-user-text:   #15110C;
+    --hspf-gold-hover:  #DCAE52;
+    --hspf-badge-text:  #E8C878;
   }
   * { box-sizing: border-box; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
   html { scroll-behavior: smooth; }
   body {
     margin: 0; padding: 0;
-    background: var(--hspf-cream);
+    background: radial-gradient(ellipse 900px 500px at 50% -10%, rgba(200,151,58,0.16), transparent 60%), #0E0A06;
     min-height: 100vh;
     color: var(--hspf-dark);
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
     font-size: 16px;
     line-height: 1.6;
+    position: relative;
+  }
+  body::before {
+    content: ""; position: fixed; inset: 0; z-index: 0; pointer-events: none;
+    opacity: 0.045; mix-blend-mode: overlay;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   }
   a { color: var(--hspf-gold-hover); }
-  ::selection { background: var(--hspf-gold); color: white; }
-  .container { max-width: 760px; margin: 0 auto; padding: 0 20px; }
+  ::selection { background: var(--hspf-gold); color: var(--hspf-cream); }
+  .container { max-width: 760px; margin: 0 auto; padding: 0 20px; position: relative; z-index: 1; }
   button { cursor: pointer; }
 
   /* ── Header ── */
   header.site {
     position: sticky; top: 0; z-index: 50;
     height: 64px;
-    background: var(--hspf-surface);
+    background: rgba(21, 17, 12, 0.78);
+    backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
     border-bottom: 1px solid var(--hspf-border);
-    box-shadow: 0 1px 4px rgba(0,0,0,0.06);
   }
   header.site .container { height: 100%; display: flex; justify-content: space-between; align-items: center; gap: 20px; }
   .logo { display: flex; align-items: center; gap: 12px; text-decoration: none; color: var(--hspf-dark); }
@@ -94,7 +101,7 @@
     display: flex; flex-direction: column;
     margin-bottom: 32px;
     border-radius: 16px;
-    box-shadow: 0 4px 24px rgba(26, 20, 16, 0.06);
+    box-shadow: 0 24px 64px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255,255,255,0.04);
     overflow: hidden;
   }
 
@@ -135,14 +142,14 @@
     padding: 3px 10px; font-size: 11px; font-family: 'Inter', sans-serif; font-weight: 500;
     border-radius: 999px; transition: all 0.18s ease; display: inline-flex; align-items: center; gap: 5px;
   }
-  .msg.bot .who .play:hover { color: var(--hspf-gold-hover); border-color: var(--hspf-gold); background: var(--hspf-surface); }
-  .msg.bot.playing { box-shadow: 0 0 0 2px var(--hspf-gold-light); }
+  .msg.bot .who .play:hover { color: var(--hspf-gold-hover); border-color: var(--hspf-gold); background: rgba(200, 151, 58, 0.12); }
+  .msg.bot.playing { box-shadow: 0 0 0 2px rgba(200, 151, 58, 0.35); }
   .msg.bot .source {
     display: inline-block; font-size: 10px; font-weight: 500; letter-spacing: 0.04em;
     padding: 2px 8px; border-radius: 999px;
-    background: var(--hspf-gold-light); color: var(--hspf-badge-text);
+    background: rgba(200, 151, 58, 0.16); color: var(--hspf-badge-text);
   }
-  .msg.bot .source.fb { background: var(--hspf-border); color: var(--hspf-muted); }
+  .msg.bot .source.fb { background: rgba(255,255,255,0.05); color: var(--hspf-muted); }
   .msg.bot .body { font-family: 'DM Serif Display', serif; font-size: 16px; line-height: 1.75; color: var(--hspf-dark); }
 
   /* ── Typing indicator ── */
@@ -162,7 +169,7 @@
   .chips::-webkit-scrollbar { display: none; }
   .chip {
     font-size: 13px; font-weight: 400; font-family: 'Inter', sans-serif;
-    background: var(--hspf-cream);
+    background: var(--hspf-surface-2);
     color: var(--hspf-brown);
     border: 1px solid var(--hspf-border);
     padding: 7px 14px;
@@ -192,7 +199,7 @@
   .composer textarea::placeholder { color: var(--hspf-muted); }
   .send-btn {
     background: var(--hspf-gold);
-    color: white; border: none;
+    color: var(--hspf-cream); border: none;
     width: 42px; height: 42px; flex-shrink: 0;
     border-radius: 50%;
     display: grid; place-items: center;
@@ -389,10 +396,52 @@ const QA = [
     audio: "audio/14_pruefungen.mp3"
   },
   {
-    id: "kontakt",
-    keywords: ["bewerbung", "fristen", "gebühren", "gebuehren", "studiengangsbüro", "studiengangsbuero", "kontakt", "ansprechpartner"],
+    id: "bewerbung",
+    keywords: ["bewerbung", "bewerben", "frist", "fristen", "wintersemester", "sommersemester", "semesterbeginn", "studienbeginn", "beginnt das ws", "beginnt das ss", "zulassung", "auswahlverfahren"],
     chip: null,
-    answer: "Konkrete Bewerbungsfristen, Studiengebühren oder Termine für Auslandssemester gehören nicht in mein Repertoire. Wenden Sie sich dafür bitte an das Studiengangsbüro der Fakultät Engineering der Hochschule Pforzheim.",
+    answer: "Der Studienbeginn ist sowohl zum Sommer- als auch zum Wintersemester möglich. Bewerbungsschluss für das Sommersemester ist der 15. Januar, für das Wintersemester der 15. Juni. Die Zulassung erfolgt über ein Auswahlverfahren, die Bewerbung läuft über das Bewerbungsportal der Hochschule Pforzheim. Es stehen insgesamt 24 Studienplätze zur Verfügung.",
+    audio: null
+  },
+  {
+    id: "leitung",
+    keywords: ["kühn", "kuehn", "studiengangleiter", "ansgar", "lisa kaiser", "koordinatorin", "sekretariat"],
+    chip: null,
+    answer: "Studiengangleiter ist Kollege Prof. Dr. Ansgar Kühn, Fachgebiet Operations Management, Raum T1.5.23, Kolloquiumzeit mittwochs von 9:45 bis 11:15 Uhr, Telefon 07231 28-6490. Studiengangkoordinatorin ist Lisa Kaiser, Raum T1.5.21, Telefon 07231 28-6472. Das Sekretariat Wirtschaftsingenieurwesen erreichen Sie unter 07231 28-6056.",
+    audio: null
+  },
+  {
+    id: "infotag",
+    keywords: ["infotag", "master-infotag", "masterinfotag"],
+    chip: null,
+    answer: "Der Master-Infotag der Fakultät für Technik findet am Donnerstag, dem 16. April 2026, ab 17:25 Uhr im Hörsaal THB statt. Nach der Begrüßung gibt es zwei Runden zur Vorstellung der Master-Studiengänge, darunter Industrial Management, mit Möglichkeit für Rückfragen. Die Anmeldung läuft über die Infotag-Seite der Hochschule Pforzheim.",
+    audio: null
+  },
+  {
+    id: "auslandssemester",
+    keywords: ["auslandssemester", "ausland", "partneruniversität", "partneruniversitaet"],
+    chip: null,
+    answer: "Ein Auslandssemester an einer Partneruniversität weltweit ist im Industrial Management möglich. Details zur Organisation und den Partnerhochschulen erfragen Sie am besten beim International Office oder Studiengangsbüro der Hochschule Pforzheim.",
+    audio: null
+  },
+  {
+    id: "akkreditierung",
+    keywords: ["akkreditierung", "akkreditiert"],
+    chip: null,
+    answer: "Im Juli 2024 wurden alle Studiengänge der Fakultät für Technik erfolgreich akkreditiert, ohne jegliche Auflagen. Gelobt wurden die hohe Qualität der Lehrinhalte, die Kompetenz der Dozenten und die ausgezeichnete Ausstattung der Lehr- und Forschungseinrichtungen.",
+    audio: null
+  },
+  {
+    id: "berufsfelder",
+    keywords: ["berufsfeld", "berufsfelder", "karriere", "jobs nach dem studium"],
+    chip: null,
+    answer: "Der Master Industrial Management qualifiziert für führende Management-Positionen in technischen oder interdisziplinären Unternehmensbereichen, sowohl national als auch international.",
+    audio: null
+  },
+  {
+    id: "kontakt",
+    keywords: ["gebühren", "gebuehren", "studiengangsbüro", "studiengangsbuero", "kontakt", "ansprechpartner"],
+    chip: null,
+    answer: "Konkrete Studiengebühren gehören nicht in mein Repertoire. Wenden Sie sich dafür bitte an das Studiengangsbüro der Fakultät Engineering der Hochschule Pforzheim.",
     audio: "audio/15_kontakt.mp3"
   },
 ];
@@ -524,7 +573,7 @@ function addBot(text, audio, source, persist = true) {
   const lbl = document.createElement("span"); lbl.textContent = "Prof. Volz"; who.appendChild(lbl);
   if (source) {
     const s = document.createElement("span"); s.className = "source" + (source === "fallback" ? " fb" : "");
-    s.textContent = source === "match" ? "Aus Wissensbasis" : "Außerhalb Wissensbasis";
+    s.textContent = source === "match" ? "Aus Wissensbasis" : source === "ai" ? "KI-generiert" : "Außerhalb Wissensbasis";
     who.appendChild(s);
   }
   const play = document.createElement("button"); play.className = "play"; play.type = "button"; play.textContent = "Vorlesen";
@@ -543,14 +592,31 @@ function ask(query) {
   addUser(query);
   inputEl.value = ""; autosize(); updateSendState();
   const typingEl = addTyping();
-  setTimeout(() => {
-    typingEl.remove();
-    const match = findAnswer(query);
-    const item = match || FALLBACK;
-    const source = match ? "match" : "fallback";
-    const bot = addBot(item.answer, item.audio, source);
-    if (audioOn) play(item.answer, item.audio, bot.wrap);
-  }, 450);
+  const match = findAnswer(query);
+  if (match) {
+    setTimeout(() => {
+      typingEl.remove();
+      const bot = addBot(match.answer, match.audio, "match");
+      if (audioOn) play(match.answer, match.audio, bot.wrap);
+    }, 450);
+    return;
+  }
+  fetch("/api/chat", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ message: query }),
+  })
+    .then(r => (r.ok ? r.json() : Promise.reject(new Error("api error"))))
+    .then(data => {
+      typingEl.remove();
+      const bot = addBot(data.answer, null, "ai");
+      if (audioOn) play(data.answer, null, bot.wrap);
+    })
+    .catch(() => {
+      typingEl.remove();
+      const bot = addBot(FALLBACK.answer, FALLBACK.audio, "fallback");
+      if (audioOn) play(FALLBACK.answer, FALLBACK.audio, bot.wrap);
+    });
 }
 function askByChip(chipId) {
   const item = findByChip(chipId);
