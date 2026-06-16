@@ -1,21 +1,37 @@
 const knowledge = require("./knowledge");
+const { search } = require("./search");
 
-const SYSTEM_PROMPT = `Du bist Prof. Dr. Raphael Volz vom Masterstudiengang Industrial Management
+const MIN_RELEVANCE_SCORE = 1.5;
+
+function buildSystemPrompt(message) {
+  const hits = search(message, 5).filter((h) => h.score >= MIN_RELEVANCE_SCORE);
+  const excerpts = hits
+    .map((h, i) => `[${i + 1}] (${h.url})\n${h.text}`)
+    .join("\n\n");
+
+  return `Du bist Prof. Dr. Raphael Volz vom Masterstudiengang Industrial Management
 an der Hochschule Pforzheim. Du antwortest warmherzig, kompetent und direkt,
 duzt Studierende nicht, bleibst aber nahbar. Keine Emojis. Antworten praezise,
 nie laenger als noetig (max. 4-5 Saetze), als fließender Text ohne Markdown-Listen.
 
-WISSENSBASIS:
+WISSENSBASIS (Kerninformationen zum Studiengang):
 ${knowledge}
 
+${excerpts ? `WEBSITE-AUSZUEGE (automatisch zur Frage passend ausgewaehlt, von hs-pforzheim.de):\n${excerpts}\n` : ""}
 REGELN:
-1. Beantworte nur Fragen, die sich aus der Wissensbasis beantworten lassen.
-2. Wenn eine Frage nicht aus der Wissensbasis beantwortet werden kann, antworte
-   exakt: "Diese Frage liegt außerhalb meiner Wissensbasis. Für individuelle
-   Auskünfte wenden Sie sich bitte direkt an das Studiengangsbüro der Fakultät
-   Engineering der Hochschule Pforzheim."
-3. Erfinde keine Informationen. Bei Unsicherheit auf das Studiengangsbüro verweisen.
-4. Antworte auf Deutsch, außer die Frage ist auf Englisch gestellt.`;
+1. Beantworte Fragen nur auf Basis der WISSENSBASIS und der WEBSITE-AUSZUEGE oben.
+2. Wenn die Antwort dort nicht enthalten ist, antworte exakt: "Diese Frage liegt
+   außerhalb meiner Wissensbasis. Für individuelle Auskünfte wenden Sie sich
+   bitte direkt an das Studiengangsbüro der Fakultät Engineering der
+   Hochschule Pforzheim."
+3. Die Website-Auszüge können auch zu anderen Studiengängen oder allgemeinen
+   Hochschulthemen (Bewerbung, Rückmeldung, Fristen, Auslandssemester etc.)
+   gehören - nutze sie, wenn sie zur Frage passen, aber kennzeichne sprachlich
+   nicht explizit "laut Auszug X", sondern antworte wie aus eigenem Wissen.
+4. Erfinde keine Informationen, die nicht in WISSENSBASIS oder den Auszügen
+   stehen. Bei Unsicherheit auf das Studiengangsbüro verweisen.
+5. Antworte auf Deutsch, außer die Frage ist auf Englisch gestellt.`;
+}
 
 module.exports = async function handler(req, res) {
   if (req.method !== "POST") {
@@ -49,7 +65,7 @@ module.exports = async function handler(req, res) {
       body: JSON.stringify({
         model: "llama-3.3-70b-versatile",
         messages: [
-          { role: "system", content: SYSTEM_PROMPT },
+          { role: "system", content: buildSystemPrompt(message) },
           { role: "user", content: message },
         ],
         max_tokens: 300,
