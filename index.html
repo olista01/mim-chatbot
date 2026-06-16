@@ -7,244 +7,174 @@
 <meta name="description" content="Chatbot zum Master of Science Industrial Management der Hochschule Pforzheim. Antworten in der Stimme von Prof. Dr. Raphael Volz." />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Crimson+Pro:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root {
-    color-scheme: dark;
-    /* HSPF Brand Colors — echte Hochschulfarben (aus hs-pforzheim.de CSS),
-       dark editorial variant */
-    --hspf-gold:        #FFBE31;
-    --hspf-gold-light:  #FFD978;
-    --hspf-gold-pale:   #2E2710;
-    --hspf-dark:        #F3EAD6;
-    --hspf-brown:       #C9BBA0;
-    --hspf-cream:       #15110C;
-    --hspf-surface:     #1B1611;
-    --hspf-surface-2:   #221B14;
-    --hspf-border:      rgba(255, 190, 49, 0.16);
-    --hspf-muted:       #8C7E6E;
-    --hspf-user-bg:     #FFBE31;
-    --hspf-user-text:   #15110C;
-    --hspf-gold-hover:  #E5AA1E;
-    --hspf-badge-text:  #FFD978;
-    --hspf-blue:        #1934FF;
-    --hspf-blue-light:  #7C87FF;
-    --hspf-blue-pale:   rgba(25, 52, 255, 0.16);
+    color-scheme: light;
+    /* Echte HSPF-Markenfarben (aus hs-pforzheim.de CSS), editoriale Transkript-Optik */
+    --gold:       #FFBE31;
+    --gold-text:  #8A6300;
+    --blue-text:  #1934FF;
+    --ink:        #18140D;
+    --muted:      #6B6253;
+    --paper:      #FBF8F2;
+    --paper-2:    #F2EBDB;
+    --rule:       #DCD2B8;
   }
   * { box-sizing: border-box; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
   html { scroll-behavior: smooth; }
   body {
     margin: 0; padding: 0;
-    background: radial-gradient(ellipse 900px 500px at 50% -10%, rgba(255,190,49,0.16), transparent 60%), #0E0A06;
+    background: var(--paper);
     min-height: 100vh;
-    color: var(--hspf-dark);
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    color: var(--ink);
+    font-family: 'Atkinson Hyperlegible', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
     font-size: 16px;
     line-height: 1.6;
-    position: relative;
   }
-  body::before {
-    content: ""; position: fixed; inset: 0; z-index: 0; pointer-events: none;
-    opacity: 0.045; mix-blend-mode: overlay;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-  }
-  a { color: var(--hspf-gold-hover); }
-  ::selection { background: var(--hspf-gold); color: var(--hspf-cream); }
-  .container { max-width: 760px; margin: 0 auto; padding: 0 20px; position: relative; z-index: 1; }
-  button { cursor: pointer; }
+  a { color: var(--gold-text); }
+  ::selection { background: var(--gold); color: var(--ink); }
+  .masthead-bar { height: 4px; background: var(--gold); }
+  .container { max-width: 700px; margin: 0 auto; padding: 0 24px; }
+  button { cursor: pointer; font-family: inherit; }
+  .small-caps { text-transform: uppercase; letter-spacing: 0.09em; font-weight: 700; }
 
   /* ── Header ── */
   header.site {
-    position: sticky; top: 0; z-index: 50;
-    height: 64px;
-    background: rgba(21, 17, 12, 0.78);
-    backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
-    border-bottom: 1px solid var(--hspf-border);
+    border-bottom: 1px solid var(--rule);
+    padding: 18px 0;
   }
-  header.site .container { height: 100%; display: flex; justify-content: space-between; align-items: center; gap: 20px; }
-  .logo { display: flex; align-items: center; gap: 12px; text-decoration: none; color: var(--hspf-dark); }
-  .logo .mark {
-    width: 36px; height: 36px;
-    background: var(--hspf-gold);
-    color: white; display: grid; place-items: center;
-    font-weight: 700; font-size: 13px; letter-spacing: -0.01em;
-    border-radius: 8px;
-  }
-  .logo .wm { display: flex; flex-direction: column; line-height: 1.15; }
-  .logo .wm .top { font-weight: 600; font-size: 15px; color: var(--hspf-dark); }
-  .logo .wm .bot { font-weight: 400; font-size: 12px; color: var(--hspf-muted); margin-top: 1px; }
+  header.site .container { display: flex; justify-content: space-between; align-items: baseline; gap: 20px; }
+  .wm { display: flex; flex-direction: column; line-height: 1.3; }
+  .wm .top { font-size: 13px; color: var(--ink); }
+  .wm .bot { font-size: 11px; color: var(--muted); letter-spacing: 0.09em; margin-top: 1px; }
   .audio-toggle {
-    display: inline-flex; align-items: center; gap: 7px;
-    background: transparent;
-    border: 1.5px solid var(--hspf-gold);
-    color: var(--hspf-gold);
-    padding: 7px 16px;
-    font-size: 13px; font-weight: 500; font-family: inherit;
-    border-radius: 999px;
-    transition: background 0.2s ease;
+    background: none; border: none; padding: 0;
+    color: var(--gold-text); font-size: 12px; letter-spacing: 0.06em;
+    text-transform: uppercase; font-weight: 700;
+    border-bottom: 1px solid transparent;
+    display: inline-flex; align-items: center; gap: 6px;
+    transition: border-color 0.15s ease;
   }
-  .audio-toggle:hover { background: var(--hspf-gold-pale); }
-  .audio-toggle.off { border-color: var(--hspf-border); color: var(--hspf-muted); }
-  .audio-toggle.off:hover { background: var(--hspf-cream); }
-  .audio-toggle svg { width: 14px; height: 14px; }
+  .audio-toggle:hover { border-bottom-color: var(--gold-text); }
+  .audio-toggle.off { color: var(--muted); }
+  .audio-toggle.off:hover { border-bottom-color: var(--muted); }
+  .audio-toggle svg { width: 13px; height: 13px; }
 
-  /* ── Page header ── */
-  .page-head { padding: 32px 0 18px; }
+  /* ── Page header / hero ── */
+  .page-head { padding: 40px 0 28px; border-bottom: 1px solid var(--rule); margin-bottom: 28px; }
+  .page-head .kicker { color: var(--gold-text); font-size: 11px; margin-bottom: 10px; }
   .page-head h1 {
-    margin: 0 0 8px;
-    font-family: 'DM Serif Display', serif;
-    font-size: 28px; font-weight: 400; letter-spacing: -0.01em;
-    color: var(--hspf-dark);
+    margin: 0 0 12px;
+    font-family: 'Crimson Pro', serif;
+    font-size: 36px; font-weight: 600; letter-spacing: -0.01em;
+    color: var(--ink);
   }
-  .page-head p { margin: 0; color: var(--hspf-brown); font-size: 15px; }
+  .page-head p { margin: 0; color: var(--muted); font-size: 16px; max-width: 56ch; }
 
-  /* ── Main panel ── */
-  .panel {
-    border: 1px solid var(--hspf-border);
-    background: var(--hspf-surface);
-    display: flex; flex-direction: column;
-    margin-bottom: 32px;
-    border-radius: 16px;
-    box-shadow: 0 24px 64px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255,255,255,0.04);
-    overflow: hidden;
-  }
-
-  /* ── Chat area ── */
-  .chat-area { padding: 24px; min-height: 320px; max-height: 540px; overflow-y: auto; display: flex; flex-direction: column; gap: 16px; }
-  .chat-area::-webkit-scrollbar { width: 5px; }
-  .chat-area::-webkit-scrollbar-thumb { background: var(--hspf-gold-light); border-radius: 99px; }
-  .empty { text-align: center; padding: 48px 16px; color: var(--hspf-muted); }
-  .empty .big { font-family: 'DM Serif Display', serif; font-size: 19px; color: var(--hspf-brown); margin-bottom: 6px; font-weight: 400; }
+  /* ── Transcript ── */
+  .chat-area { padding: 0; min-height: 280px; display: flex; flex-direction: column; }
+  .empty { padding: 8px 0 36px; color: var(--muted); }
+  .empty .big { font-family: 'Crimson Pro', serif; font-size: 21px; color: var(--ink); margin-bottom: 6px; font-weight: 600; }
   .empty .small { font-size: 14px; }
 
-  /* ── Messages ── */
-  @keyframes appearBot { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
-  @keyframes appearUser { from { opacity: 0; transform: translateX(12px); } to { opacity: 1; transform: translateX(0); } }
-  .msg.user {
-    align-self: flex-end;
-    max-width: 65%;
-    background: var(--hspf-user-bg);
-    color: var(--hspf-user-text);
-    border-radius: 16px 16px 0 16px;
-    padding: 12px 18px;
-    font-size: 15px;
-    animation: appearUser 0.2s ease-out;
+  @keyframes appearIn { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }
+  .turn { padding: 18px 0; border-bottom: 1px solid var(--rule); animation: appearIn 0.2s ease-out; }
+  .turn:last-child { border-bottom: none; }
+  .turn .who {
+    display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+    font-size: 11px; margin-bottom: 8px;
   }
-  .msg.bot {
-    align-self: flex-start;
-    max-width: 75%;
-    background: var(--hspf-gold-pale);
-    color: var(--hspf-dark);
-    border-radius: 0 16px 16px 16px;
-    border-left: 3px solid var(--hspf-gold);
-    padding: 16px 20px;
-    animation: appearBot 0.25s ease-out;
+  .turn.user .who { color: var(--muted); }
+  .turn.bot .who { color: var(--gold-text); }
+  .turn .who .play {
+    background: none; border: none; padding: 0;
+    color: var(--muted); font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase; font-weight: 700;
+    border-bottom: 1px solid transparent;
+    margin-left: auto;
+    transition: border-color 0.15s ease, color 0.15s ease;
   }
-  .msg.bot .who { font-size: 11px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: var(--hspf-gold); margin-bottom: 10px; display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
-  .msg.bot .who .play {
-    background: transparent; border: 1px solid var(--hspf-border); color: var(--hspf-brown);
-    padding: 3px 10px; font-size: 11px; font-family: 'Inter', sans-serif; font-weight: 500;
-    border-radius: 999px; transition: all 0.18s ease; display: inline-flex; align-items: center; gap: 5px;
-  }
-  .msg.bot .who .play:hover { color: var(--hspf-gold-hover); border-color: var(--hspf-gold); background: rgba(255, 190, 49, 0.12); }
-  .msg.bot.playing { box-shadow: 0 0 0 2px rgba(255, 190, 49, 0.35); }
-  .msg.bot .source {
-    display: inline-block; font-size: 10px; font-weight: 500; letter-spacing: 0.04em;
-    padding: 2px 8px; border-radius: 999px;
-    background: var(--hspf-border); color: var(--hspf-badge-text);
-  }
-  .msg.bot .source.fb { background: rgba(255,255,255,0.05); color: var(--hspf-muted); }
-  .msg.bot .source.ai { background: var(--hspf-blue-pale); color: var(--hspf-blue-light); }
-  .msg.bot .body { font-family: 'DM Serif Display', serif; font-size: 16px; line-height: 1.75; color: var(--hspf-dark); }
+  .turn .who .play:hover { color: var(--gold-text); border-bottom-color: var(--gold-text); }
+  .turn.playing { background: var(--paper-2); margin: 0 -16px; padding: 18px 16px; border-radius: 2px; }
+  .source { font-weight: 700; }
+  .source.ai { color: var(--blue-text); }
+  .source.fb { color: var(--muted); }
+  .turn.user .body { font-size: 16px; color: var(--ink); font-weight: 700; }
+  .turn.bot .body { font-family: 'Crimson Pro', serif; font-size: 19px; line-height: 1.7; color: var(--ink); }
 
   /* ── Typing indicator ── */
-  .typing { display: inline-flex; gap: 4px; align-items: center; padding: 4px 0; }
-  .typing span { width: 6px; height: 6px; border-radius: 50%; background: var(--hspf-gold); animation: blink 1.1s infinite; }
-  .typing span:nth-child(2) { animation-delay: 0.15s; }
-  .typing span:nth-child(3) { animation-delay: 0.3s; }
-  @keyframes blink { 0%, 100% { opacity: 0.3; } 50% { opacity: 1; } }
+  .typing-text { font-family: 'Crimson Pro', serif; font-size: 19px; font-style: italic; color: var(--muted); }
+  .typing-text .cursor { display: inline-block; animation: blink 1s steps(1) infinite; }
+  @keyframes blink { 0%, 49% { opacity: 1; } 50%, 100% { opacity: 0; } }
 
-  /* ── Chips ── */
-  .chips {
-    display: flex; gap: 8px; padding: 10px 16px;
-    border-top: 1px solid var(--hspf-border); background: var(--hspf-surface);
-    overflow-x: auto; flex-wrap: nowrap;
-    scrollbar-width: none;
-  }
-  .chips::-webkit-scrollbar { display: none; }
+  /* ── Suggested questions ── */
+  .chips-wrap { padding: 22px 0; border-bottom: 1px solid var(--rule); }
+  .chips-wrap .kicker { color: var(--muted); font-size: 11px; margin-bottom: 10px; display: block; }
+  .chips { display: flex; flex-wrap: wrap; gap: 0 16px; }
   .chip {
-    font-size: 13px; font-weight: 400; font-family: 'Inter', sans-serif;
-    background: var(--hspf-surface-2);
-    color: var(--hspf-brown);
-    border: 1px solid var(--hspf-border);
-    padding: 7px 14px;
-    border-radius: 999px;
-    white-space: nowrap; flex-shrink: 0;
-    transition: all 0.15s ease;
+    background: none; border: none; padding: 4px 0;
+    font-size: 14px; font-family: 'Atkinson Hyperlegible', sans-serif; color: var(--ink);
+    border-bottom: 1px solid var(--rule);
+    transition: border-color 0.15s ease, color 0.15s ease;
   }
-  .chip:hover {
-    background: var(--hspf-gold-pale); border-color: var(--hspf-gold);
-    color: var(--hspf-badge-text);
-    transform: translateY(-1px);
-  }
+  .chip:hover { color: var(--gold-text); border-bottom-color: var(--gold-text); }
 
   /* ── Composer ── */
-  .composer { display: flex; gap: 10px; align-items: center; padding: 12px 16px; border-top: 1px solid var(--hspf-border); background: var(--hspf-surface); }
+  .composer { display: flex; gap: 14px; align-items: flex-end; padding: 22px 0 10px; }
   .composer textarea {
     flex: 1;
-    background: var(--hspf-cream);
-    border: 1.5px solid var(--hspf-border);
-    color: var(--hspf-dark); padding: 10px 18px;
-    font: inherit; font-size: 14px; resize: none; outline: none;
-    min-height: 44px; max-height: 160px; font-family: 'Inter', sans-serif;
-    border-radius: 24px;
-    transition: border-color 0.2s, background 0.2s;
+    background: transparent;
+    border: none; border-bottom: 2px solid var(--ink);
+    color: var(--ink); padding: 8px 0;
+    font: inherit; font-size: 17px; resize: none; outline: none;
+    min-height: 38px; max-height: 160px; font-family: 'Crimson Pro', serif;
+    transition: border-color 0.2s;
   }
-  .composer textarea:focus { border-color: var(--hspf-gold); background: var(--hspf-surface); }
-  .composer textarea::placeholder { color: var(--hspf-muted); }
+  .composer textarea:focus { border-color: var(--gold-text); }
+  .composer textarea::placeholder { color: var(--muted); font-family: 'Atkinson Hyperlegible', sans-serif; font-size: 15px; }
   .send-btn {
-    background: var(--hspf-gold);
-    color: var(--hspf-cream); border: none;
-    width: 42px; height: 42px; flex-shrink: 0;
-    border-radius: 50%;
-    display: grid; place-items: center;
-    transition: background 0.2s ease;
+    background: none; border: none; padding: 8px 0;
+    color: var(--ink); font-size: 13px; letter-spacing: 0.06em; text-transform: uppercase; font-weight: 700;
+    border-bottom: 2px solid var(--gold);
+    transition: color 0.15s ease, border-color 0.15s ease;
+    white-space: nowrap;
   }
-  .send-btn svg { width: 18px; height: 18px; }
-  .send-btn:hover:not(:disabled) { background: var(--hspf-gold-hover); }
-  .send-btn:disabled { background: var(--hspf-border); color: var(--hspf-muted); cursor: default; }
+  .send-btn:hover:not(:disabled) { color: var(--gold-text); }
+  .send-btn:disabled { color: var(--muted); border-bottom-color: var(--rule); cursor: default; }
 
-  /* ── Panel footer ── */
-  .panel-foot { display: flex; gap: 6px; padding: 8px 14px; border-top: 1px solid var(--hspf-border); background: var(--hspf-cream); }
-  .panel-foot button { background: transparent; border: 1px solid transparent; color: var(--hspf-muted); padding: 5px 12px; font-family: 'Inter', sans-serif; font-size: 12px; border-radius: 8px; transition: all 0.18s; }
-  .panel-foot button:hover { color: var(--hspf-gold-hover); border-color: var(--hspf-gold-light); background: var(--hspf-surface); }
+  /* ── Footer actions ── */
+  .panel-foot { display: flex; gap: 18px; padding: 4px 0 40px; }
+  .panel-foot button {
+    background: none; border: none; padding: 0;
+    color: var(--muted); font-size: 12px; letter-spacing: 0.04em;
+    border-bottom: 1px solid transparent;
+    transition: color 0.15s ease, border-color 0.15s ease;
+  }
+  .panel-foot button:hover { color: var(--gold-text); border-bottom-color: var(--gold-text); }
 
-  /* ── Footer ── */
-  footer.site { border-top: 1px solid var(--hspf-border); padding: 20px 0 28px; margin-top: 24px; color: var(--hspf-muted); font-size: 12px; }
+  /* ── Site footer ── */
+  footer.site { border-top: 1px solid var(--rule); padding: 18px 0 32px; color: var(--muted); font-size: 12px; }
   footer.site .container { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; }
 
   @media (max-width: 640px) {
-    header.site { height: 56px; }
-    .msg.user { max-width: 85%; }
-    .msg.bot { max-width: 90%; }
+    .page-head h1 { font-size: 28px; }
+    .turn.bot .body { font-size: 17px; }
   }
 
   @media (prefers-reduced-motion: reduce) {
-    *, .msg, .typing span { animation: none !important; transition: none !important; }
+    *, .turn, .typing-text .cursor { animation: none !important; transition: none !important; }
   }
 </style>
 </head>
 <body>
 
+<div class="masthead-bar"></div>
 <header class="site">
   <div class="container">
-    <a class="logo" href="#">
-      <div class="mark">HS</div>
-      <div class="wm">
-        <span class="top">Hochschule Pforzheim</span>
-        <span class="bot">MIM Chatbot</span>
-      </div>
-    </a>
+    <div class="wm">
+      <span class="top small-caps">Hochschule Pforzheim · Fakultät Technik</span>
+      <span class="bot small-caps">MIM Chatbot</span>
+    </div>
     <button class="audio-toggle" id="audioToggle" aria-pressed="true" aria-label="Sprachausgabe an oder aus schalten">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>
       <span id="audioLabel">Stimme an</span>
@@ -255,13 +185,15 @@
 <div class="container">
 
   <div class="page-head">
+    <span class="kicker small-caps">Interview · Master Industrial Management</span>
     <h1>Fragen Sie Prof. Volz</h1>
     <p>Der Chatbot beantwortet Fragen zum Master Industrial Management — in der Stimme von Prof. Dr. Raphael Volz.</p>
   </div>
 
-  <div class="panel">
-    <div class="chat-area" id="chat" role="log" aria-live="polite"></div>
+  <div class="chat-area" id="chat" role="log" aria-live="polite"></div>
 
+  <div class="chips-wrap">
+    <span class="kicker small-caps">Vorschläge</span>
     <div class="chips" id="suggestions">
       <button class="chip" data-q="capstone">Capstone-Aufgabe</button>
       <button class="chip" data-q="studienverlauf">Studienverlauf</button>
@@ -270,18 +202,16 @@
       <button class="chip" data-q="seminarb">Seminar IM B</button>
       <button class="chip" data-q="thesis">Master-Thesis</button>
     </div>
+  </div>
 
-    <form class="composer" id="form">
-      <textarea id="input" placeholder="Ihre Frage …" rows="1" autocomplete="off" aria-label="Frage eingeben"></textarea>
-      <button type="submit" class="send-btn" id="send" disabled aria-label="Nachricht senden">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
-      </button>
-    </form>
+  <form class="composer" id="form">
+    <textarea id="input" placeholder="Ihre Frage …" rows="1" autocomplete="off" aria-label="Frage eingeben"></textarea>
+    <button type="submit" class="send-btn" id="send" disabled aria-label="Nachricht senden">Senden →</button>
+  </form>
 
-    <div class="panel-foot">
-      <button id="stopAudio" aria-label="Audiowiedergabe stoppen">Audio stoppen</button>
-      <button id="resetChat" aria-label="Unterhaltung zurücksetzen">Zurücksetzen</button>
-    </div>
+  <div class="panel-foot">
+    <button id="stopAudio" aria-label="Audiowiedergabe stoppen">Audio stoppen</button>
+    <button id="resetChat" aria-label="Unterhaltung zurücksetzen">Zurücksetzen</button>
   </div>
 
 </div>
@@ -497,7 +427,7 @@ function stopAudio() {
   if (currentAudio) { try { currentAudio.pause(); currentAudio.currentTime = 0; } catch (e) {} currentAudio = null; }
   if (window.speechSynthesis) window.speechSynthesis.cancel();
   currentUtterance = null;
-  document.querySelectorAll(".msg.bot.playing").forEach(el => el.classList.remove("playing"));
+  document.querySelectorAll(".turn.playing").forEach(el => el.classList.remove("playing"));
 }
 document.getElementById("stopAudio").addEventListener("click", stopAudio);
 
@@ -538,7 +468,7 @@ function ttsFallback(text, msgEl) {
 }
 
 /* ============================================================
- * UI / History
+ * UI / History — Interview-Transkript-Layout (kein Bubble-Chat)
  * ===========================================================*/
 const HIST_KEY = "mim_offline_hist_v1";
 const $ = id => document.getElementById(id);
@@ -550,7 +480,7 @@ function renderAll() {
   chatEl.innerHTML = "";
   if (history.length === 0) {
     const e = document.createElement("div"); e.className = "empty";
-    e.innerHTML = '<div class="big">Womit kann ich helfen?</div><div class="small">Wählen Sie eine der Vorschlagsfragen oder fragen Sie selbst.</div>';
+    e.innerHTML = '<div class="big">Wie kann ich Ihnen helfen?</div><div class="small">Wählen Sie eine der Vorschlagsfragen oder fragen Sie selbst.</div>';
     chatEl.appendChild(e);
     return;
   }
@@ -560,21 +490,26 @@ function renderAll() {
 function clearEmpty() { const e = chatEl.querySelector(".empty"); if (e) e.remove(); }
 function addUser(text, persist = true) {
   clearEmpty();
-  const d = document.createElement("div"); d.className = "msg user"; d.textContent = text;
+  const d = document.createElement("div"); d.className = "turn user";
+  const who = document.createElement("div"); who.className = "who small-caps"; who.textContent = "Sie fragen";
+  const b = document.createElement("div"); b.className = "body"; b.textContent = text;
+  d.appendChild(who); d.appendChild(b);
   chatEl.appendChild(d); chatEl.scrollTop = chatEl.scrollHeight;
   if (persist) { history.push({ role: "user", text }); saveHistory(); }
 }
 function addTyping() {
   clearEmpty();
-  const d = document.createElement("div"); d.className = "msg bot typing-wrap";
-  d.innerHTML = '<div class="typing"><span></span><span></span><span></span></div>';
+  const d = document.createElement("div"); d.className = "turn bot";
+  const who = document.createElement("div"); who.className = "who small-caps"; who.textContent = "Prof. Volz";
+  const b = document.createElement("div"); b.className = "typing-text"; b.innerHTML = 'schreibt<span class="cursor">…</span>';
+  d.appendChild(who); d.appendChild(b);
   chatEl.appendChild(d); chatEl.scrollTop = chatEl.scrollHeight;
   return d;
 }
 function addBot(text, audio, source, persist = true) {
   clearEmpty();
-  const d = document.createElement("div"); d.className = "msg bot";
-  const who = document.createElement("div"); who.className = "who";
+  const d = document.createElement("div"); d.className = "turn bot";
+  const who = document.createElement("div"); who.className = "who small-caps";
   const lbl = document.createElement("span"); lbl.textContent = "Prof. Volz"; who.appendChild(lbl);
   if (source) {
     const s = document.createElement("span"); s.className = "source" + (source === "fallback" ? " fb" : source === "ai" ? " ai" : "");
