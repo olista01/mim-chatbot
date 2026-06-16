@@ -98,12 +98,6 @@
   .history-empty { font-size: 12px; color: var(--muted); padding: 4px 0 14px; }
 
   .main { min-width: 0; padding-bottom: 24px; display: flex; flex-direction: column; }
-  .chat-area {
-    max-height: 58vh; overflow-y: auto;
-    padding-right: 6px; margin-right: -6px;
-  }
-  .chat-area::-webkit-scrollbar { width: 5px; }
-  .chat-area::-webkit-scrollbar-thumb { background: var(--rule); border-radius: 99px; }
 
   @media (max-width: 860px) {
     .layout { grid-template-columns: 1fr; }
@@ -144,7 +138,12 @@
   .page-head p { margin: 0; color: var(--muted); font-size: 16px; max-width: 56ch; }
 
   /* ── Transcript ── */
-  .chat-area { padding: 0; min-height: 280px; display: flex; flex-direction: column; }
+  .chat-area {
+    padding: 0; min-height: 280px; display: flex; flex-direction: column;
+    max-height: 58vh; overflow-y: auto; padding-right: 6px; margin-right: -6px;
+  }
+  .chat-area::-webkit-scrollbar { width: 5px; }
+  .chat-area::-webkit-scrollbar-thumb { background: var(--rule); border-radius: 99px; }
   .empty { padding: 8px 0 36px; color: var(--muted); }
   .empty .big { font-family: 'Crimson Pro', serif; font-size: 21px; color: var(--ink); margin-bottom: 6px; font-weight: 600; }
   .empty .small { font-size: 14px; }
@@ -255,7 +254,11 @@
   <div class="layout">
 
     <aside class="sidebar">
-      <span class="kicker small-caps">Quick-Infos</span>
+      <span class="kicker small-caps">Verlauf</span>
+      <button class="new-chat-btn" id="newChat">+ Neue Frage</button>
+      <div class="history-list" id="historyList"></div>
+
+      <span class="kicker small-caps" style="margin-top:22px;display:block;">Quick-Infos</span>
 
       <details>
         <summary>Studienverlauf</summary>
@@ -585,34 +588,96 @@ function ttsFallback(text, msgEl) {
 }
 
 /* ============================================================
- * UI / History — Interview-Transkript-Layout (kein Bubble-Chat)
+ * UI / Chat-Historie — mehrere Unterhaltungen, lokal gespeichert
  * ===========================================================*/
-const HIST_KEY = "mim_offline_hist_v1";
+const CHATS_KEY = "mim_chats_v1";
+const ACTIVE_KEY = "mim_active_chat_v1";
+const OLD_HIST_KEY = "mim_offline_hist_v1"; // Migration von der alten Einzel-Historie
 const $ = id => document.getElementById(id);
-const chatEl = $("chat"), inputEl = $("input"), formEl = $("form"), sendEl = $("send");
-let history = (() => { try { return JSON.parse(localStorage.getItem(HIST_KEY) || "[]"); } catch (e) { return []; } })();
-function saveHistory() { localStorage.setItem(HIST_KEY, JSON.stringify(history)); }
+const chatEl = $("chat"), inputEl = $("input"), formEl = $("form"), sendEl = $("send"), historyListEl = $("historyList");
+
+let chats = (() => { try { return JSON.parse(localStorage.getItem(CHATS_KEY) || "[]"); } catch (e) { return []; } })();
+let activeId = localStorage.getItem(ACTIVE_KEY) || null;
+
+// Einmalige Migration der alten Einzel-Historie in einen ersten Chat-Eintrag
+if (chats.length === 0) {
+  try {
+    const old = JSON.parse(localStorage.getItem(OLD_HIST_KEY) || "[]");
+    if (old.length > 0) {
+      const firstUser = old.find(m => m.role === "user");
+      chats.push({ id: "migrated", title: makeTitle(firstUser ? firstUser.text : "Unterhaltung"), messages: old });
+      activeId = "migrated";
+    }
+  } catch (e) {}
+  localStorage.removeItem(OLD_HIST_KEY);
+}
+
+function makeTitle(text) {
+  text = (text || "Neue Frage").trim();
+  return text.length > 42 ? text.slice(0, 42) + "…" : text;
+}
+function saveChats() { localStorage.setItem(CHATS_KEY, JSON.stringify(chats)); }
+function saveActive() {
+  if (activeId) localStorage.setItem(ACTIVE_KEY, activeId);
+  else localStorage.removeItem(ACTIVE_KEY);
+}
+function getActiveChat() { return chats.find(c => c.id === activeId) || null; }
+function ensureActiveChat(firstText) {
+  let chat = getActiveChat();
+  if (chat) return chat;
+  chat = { id: String(Date.now()), title: makeTitle(firstText), messages: [] };
+  chats.unshift(chat);
+  activeId = chat.id;
+  saveChats(); saveActive();
+  renderHistoryList();
+  return chat;
+}
+function pushMessage(msg) {
+  const chat = getActiveChat();
+  if (!chat) return;
+  chat.messages.push(msg);
+  saveChats();
+}
+
+function renderHistoryList() {
+  historyListEl.innerHTML = "";
+  if (chats.length === 0) {
+    const e = document.createElement("div"); e.className = "history-empty"; e.textContent = "Noch keine Unterhaltungen.";
+    historyListEl.appendChild(e);
+    return;
+  }
+  for (const c of chats) {
+    const b = document.createElement("button");
+    b.className = "history-item" + (c.id === activeId ? " active" : "");
+    b.textContent = c.title;
+    b.title = c.title;
+    b.addEventListener("click", () => { activeId = c.id; saveActive(); renderAll(); renderHistoryList(); });
+    historyListEl.appendChild(b);
+  }
+}
 
 function renderAll() {
   chatEl.innerHTML = "";
-  if (history.length === 0) {
+  const chat = getActiveChat();
+  if (!chat || chat.messages.length === 0) {
     const e = document.createElement("div"); e.className = "empty";
     e.innerHTML = '<div class="big">Wie kann ich Ihnen helfen?</div><div class="small">Wählen Sie eine der Vorschlagsfragen oder fragen Sie selbst.</div>';
     chatEl.appendChild(e);
     return;
   }
-  for (const m of history) m.role === "bot" ? addBot(m.text, m.audio, m.source, false) : addUser(m.text, false);
+  for (const m of chat.messages) m.role === "bot" ? addBot(m.text, m.audio, m.source, false) : addUser(m.text, false);
   chatEl.scrollTop = chatEl.scrollHeight;
 }
 function clearEmpty() { const e = chatEl.querySelector(".empty"); if (e) e.remove(); }
 function addUser(text, persist = true) {
+  if (persist) ensureActiveChat(text);
   clearEmpty();
   const d = document.createElement("div"); d.className = "turn user";
   const who = document.createElement("div"); who.className = "who small-caps"; who.textContent = "Sie fragen";
   const b = document.createElement("div"); b.className = "body"; b.textContent = text;
   d.appendChild(who); d.appendChild(b);
   chatEl.appendChild(d); chatEl.scrollTop = chatEl.scrollHeight;
-  if (persist) { history.push({ role: "user", text }); saveHistory(); }
+  if (persist) pushMessage({ role: "user", text });
 }
 function addTyping() {
   clearEmpty();
@@ -640,7 +705,7 @@ function addBot(text, audio, source, persist = true) {
   d.appendChild(who);
   const b = document.createElement("div"); b.className = "body"; b.textContent = text; d.appendChild(b);
   chatEl.appendChild(d); chatEl.scrollTop = chatEl.scrollHeight;
-  if (persist) { history.push({ role: "bot", text, audio, source }); saveHistory(); }
+  if (persist) pushMessage({ role: "bot", text, audio, source });
   return { wrap: d, body: b };
 }
 function play_(text, audio, msgEl) { play(text, audio, msgEl); }
@@ -701,8 +766,17 @@ inputEl.addEventListener("keydown", (e) => { if (e.key === "Enter" && !e.shiftKe
 inputEl.addEventListener("input", () => { autosize(); updateSendState(); });
 function autosize() { inputEl.style.height = "auto"; inputEl.style.height = Math.min(inputEl.scrollHeight, 160) + "px"; }
 $("suggestions").addEventListener("click", (e) => { const b = e.target.closest(".chip"); if (!b) return; askByChip(b.dataset.q); });
-$("resetChat").addEventListener("click", () => { if (confirm("Konversation wirklich zurücksetzen?")) { history = []; saveHistory(); renderAll(); } });
+$("resetChat").addEventListener("click", () => {
+  if (!getActiveChat()) return;
+  if (!confirm("Diese Unterhaltung wirklich löschen?")) return;
+  chats = chats.filter(c => c.id !== activeId);
+  activeId = null;
+  saveChats(); saveActive();
+  renderAll(); renderHistoryList();
+});
+$("newChat").addEventListener("click", () => { activeId = null; saveActive(); renderAll(); renderHistoryList(); });
 
+renderHistoryList();
 renderAll();
 updateSendState();
 </script>
