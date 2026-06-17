@@ -11,8 +11,14 @@ function buildSystemPrompt(message) {
 
   return `Du bist Prof. Dr. Raphael Volz vom Masterstudiengang Industrial Management
 an der Hochschule Pforzheim. Du antwortest warmherzig, kompetent und direkt,
-duzt Studierende nicht, bleibst aber nahbar. Keine Emojis. Antworten praezise,
-nie laenger als noetig (max. 4-5 Saetze), als fließender Text ohne Markdown-Listen.
+duzt Studierende nicht, bleibst aber nahbar. Keine Emojis.
+
+FORMATIERUNGSREGELN:
+- Bei einer einzelnen, klar beantwortwortbaren Frage: 2-4 Saetze fliessender Text.
+- Bei mehreren Punkten oder Aufzaehlungen (z.B. Fristen, Schritte, Optionen):
+  nutze eine knappe Stichpunktliste mit "- " am Zeilenanfang.
+- Wichtige Daten, Termine und Eigennamen mit **Fettschrift** hervorheben.
+- Nie laenger als noetig. Kein Markdown-Header, keine geschachtelten Listen.
 
 WISSENSBASIS (Kerninformationen zum Studiengang):
 ${knowledge}
@@ -31,6 +37,11 @@ REGELN:
 4. Erfinde keine Informationen, die nicht in WISSENSBASIS oder den Auszügen
    stehen. Bei Unsicherheit auf das Studiengangsbüro verweisen.
 5. Antworte auf Deutsch, außer die Frage ist auf Englisch gestellt.`;
+}
+
+function getSourceUrls(message) {
+  const hits = search(message, 5).filter((h) => h.score >= MIN_RELEVANCE_SCORE);
+  return [...new Set(hits.map((h) => h.url))].slice(0, 3);
 }
 
 module.exports = async function handler(req, res) {
@@ -87,7 +98,8 @@ module.exports = async function handler(req, res) {
       return;
     }
 
-    res.status(200).json({ answer });
+    const sources = getSourceUrls(message);
+    res.status(200).json({ answer, sources });
   } catch (err) {
     console.error("chat handler error:", err);
     res.status(500).json({ error: "Internal error" });

@@ -187,9 +187,21 @@
   }
   .turn .who .play:hover { color: var(--gold-text); border-bottom-color: var(--gold-text); }
   .turn.playing { background: var(--paper); margin: 0 -16px; padding: 14px 16px; border-radius: 2px; box-shadow: inset 2px 0 0 var(--gold); }
-  .source { font-weight: 700; }
-  .source.ai { color: var(--blue-text); }
-  .source.fb { color: var(--muted); }
+  .source {
+    font-size: 10px; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.08em; padding: 2px 7px; border-radius: 3px;
+  }
+  .source.ai  { color: var(--gold-text); background: rgba(255,190,49,0.15); }
+  .source.kb  { color: var(--ink);       background: var(--paper-2); border: 1px solid var(--rule); }
+  .source.fb  { color: var(--muted);     background: var(--paper);   border: 1px solid var(--rule); }
+  .sources-list {
+    margin-top: 10px; padding-top: 8px; border-top: 1px solid var(--rule);
+    font-size: 11px; color: var(--muted); font-family: 'Atkinson Hyperlegible', sans-serif;
+    display: flex; flex-wrap: wrap; gap: 6px; align-items: center;
+  }
+  .sources-list .src-label { font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; }
+  .sources-list a { color: var(--muted); text-decoration: underline; text-underline-offset: 2px; }
+  .sources-list a:hover { color: var(--gold-text); }
   .turn.bot .body { font-family: 'Crimson Pro', serif; font-size: 19px; line-height: 1.7; color: var(--ink); }
 
   /* ── Typing indicator — drei animierte Punkte ── */
@@ -694,7 +706,7 @@ function renderAll() {
     chatEl.appendChild(e);
     return;
   }
-  for (const m of chat.messages) m.role === "bot" ? addBot(m.text, m.audio, m.source, false) : addUser(m.text, false);
+  for (const m of chat.messages) m.role === "bot" ? addBot(m.text, m.audio, m.source, false, m.sources || []) : addUser(m.text, false);
   chatEl.scrollTop = chatEl.scrollHeight;
 }
 function clearEmpty() { const e = chatEl.querySelector(".empty"); if (e) e.remove(); }
@@ -718,24 +730,54 @@ function addTyping() {
   chatEl.appendChild(d); chatEl.scrollTop = chatEl.scrollHeight;
   return d;
 }
-function addBot(text, audio, source, persist = true) {
+function renderMarkdown(text) {
+  const esc = s => s.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
+  const lines = text.split("\n");
+  let html = "", inList = false;
+  for (const raw of lines) {
+    const line = raw.trim();
+    if (/^[-*•]\s+/.test(line)) {
+      if (!inList) { html += "<ul>"; inList = true; }
+      html += "<li>" + esc(line.replace(/^[-*•]\s+/,"")).replace(/\*\*(.+?)\*\*/g,"<strong>$1</strong>") + "</li>";
+    } else {
+      if (inList) { html += "</ul>"; inList = false; }
+      if (line) html += "<p>" + esc(line).replace(/\*\*(.+?)\*\*/g,"<strong>$1</strong>") + "</p>";
+    }
+  }
+  if (inList) html += "</ul>";
+  return html;
+}
+
+function addBot(text, audio, source, persist = true, sources = []) {
   clearEmpty();
   const d = document.createElement("div"); d.className = "turn bot";
   const who = document.createElement("div"); who.className = "who small-caps";
   const lbl = document.createElement("span"); lbl.textContent = "Prof. Volz"; who.appendChild(lbl);
   if (source) {
-    const s = document.createElement("span"); s.className = "source" + (source === "fallback" ? " fb" : source === "ai" ? " ai" : "");
-    s.textContent = source === "match" ? "Aus Wissensbasis" : source === "ai" ? "KI-generiert" : "Außerhalb Wissensbasis";
+    const cls = source === "ai" ? "ai" : source === "match" ? "kb" : "fb";
+    const label = source === "ai" ? "KI-Antwort" : source === "match" ? "Wissensbasis" : "Außerhalb";
+    const s = document.createElement("span"); s.className = "source " + cls; s.textContent = label;
     who.appendChild(s);
   }
-  const play = document.createElement("button"); play.className = "play"; play.type = "button"; play.textContent = "Vorlesen";
-  play.setAttribute("aria-label", "Antwort vorlesen");
-  play.addEventListener("click", () => play_(text, audio, d));
-  who.appendChild(play);
+  const playBtn = document.createElement("button"); playBtn.className = "play"; playBtn.type = "button"; playBtn.textContent = "Vorlesen";
+  playBtn.setAttribute("aria-label", "Antwort vorlesen");
+  playBtn.addEventListener("click", () => play_(text, audio, d));
+  who.appendChild(playBtn);
   d.appendChild(who);
-  const b = document.createElement("div"); b.className = "body"; b.textContent = text; d.appendChild(b);
+  const b = document.createElement("div"); b.className = "body"; b.innerHTML = renderMarkdown(text); d.appendChild(b);
+  if (sources && sources.length > 0) {
+    const sl = document.createElement("div"); sl.className = "sources-list";
+    const lbl2 = document.createElement("span"); lbl2.className = "src-label"; lbl2.textContent = "Quellen:"; sl.appendChild(lbl2);
+    sources.forEach(url => {
+      const clean = url.replace(/^https?:\/\/(www\.)?/,"").replace(/\/$/,"");
+      const a = document.createElement("a"); a.href = url; a.target = "_blank"; a.rel = "noopener";
+      a.textContent = clean.length > 50 ? clean.slice(0,50)+"…" : clean;
+      sl.appendChild(a);
+    });
+    d.appendChild(sl);
+  }
   chatEl.appendChild(d); chatEl.scrollTop = chatEl.scrollHeight;
-  if (persist) pushMessage({ role: "bot", text, audio, source });
+  if (persist) pushMessage({ role: "bot", text, audio, source, sources });
   return { wrap: d, body: b };
 }
 function play_(text, audio, msgEl) { play(text, audio, msgEl); }
@@ -765,7 +807,7 @@ function ask(query) {
     .then(r => (r.ok ? r.json() : Promise.reject(new Error("api error"))))
     .then(data => {
       typingEl.remove();
-      const bot = addBot(data.answer, null, "ai");
+      const bot = addBot(data.answer, null, "ai", true, data.sources || []);
       if (audioOn) play(data.answer, null, bot.wrap);
     })
     .catch(() => {
