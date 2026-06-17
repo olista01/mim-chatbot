@@ -1,12 +1,12 @@
-// Baut einen BM25-Suchindex aus dem Apify-Website-Crawl-Dataset.
-// Liest die rohe JSON-Crawl-Datei, zerteilt jede Seite in Chunks,
-// tokenisiert sie und schreibt zwei kompakte Dateien nach api/data/,
-// die zur Laufzeit von api/search.js geladen werden.
+// Baut einen BM25-Suchindex aus dem Apify-Website-Crawl-Dataset UND
+// den lokalen PDF-Dateien (Modulhandbuch, Semestertermine).
+// Zerteilt alles in Chunks, tokenisiert und schreibt api/data/*.json.
 //
 // Aufruf: node scripts/build_search_index.js
 
 const fs = require("fs");
 const path = require("path");
+const pdfParse = require("pdf-parse"); // v1.x: direkt eine Funktion
 
 const ROOT = path.join(__dirname, "..");
 const DATASET_PATH = path.join(
@@ -16,6 +16,15 @@ const DATASET_PATH = path.join(
 const OUT_DIR = path.join(ROOT, "api", "data");
 const CHUNKS_OUT = path.join(OUT_DIR, "chunks.json");
 const INDEX_OUT = path.join(OUT_DIR, "bm25-index.json");
+
+// Alle PDFs im Projekt-Root, die indexiert werden sollen
+const PDF_FILES = [
+  "MODULHANDBUCH_MASTER_MIM_PO_2024.pdf",
+  "Sommersemester2026.pdf",
+  "1NEU_Wintersemester2026_27.pdf",
+  "1Neu_Sommersemester_2027.pdf",
+  "Wintersemester2027_28.pdf",
+];
 
 const CHUNK_SIZE = 800; // Zielgroesse in Zeichen
 const CHUNK_OVERLAP = 120;
@@ -87,7 +96,33 @@ function tokenize(text) {
     .filter((t) => t.length > 1 && !STOPWORDS.has(t));
 }
 
-function build() {
+async function loadPdfs() {
+  const pdfChunks = [];
+  for (const filename of PDF_FILES) {
+    const filePath = path.join(ROOT, filename);
+    if (!fs.existsSync(filePath)) {
+      console.warn("PDF nicht gefunden, übersprungen:", filename);
+      continue;
+    }
+    try {
+      const buffer = fs.readFileSync(filePath);
+      const data = await pdfParse(buffer, { max: 0 }); // max:0 = alle Seiten
+      const cleaned = cleanText(data.text);
+      if (cleaned.length < 30) continue;
+      const source = `pdf://${filename}`;
+      for (const c of chunkText(cleaned)) {
+        if (c.trim().length < 30) continue;
+        pdfChunks.push({ url: source, text: c.trim() });
+      }
+      console.log(`  ${filename}: ${pdfChunks.filter(c => c.url === source).length} Chunks`);
+    } catch (err) {
+      console.error("Fehler beim Lesen von", filename, err.message);
+    }
+  }
+  return pdfChunks;
+}
+
+async function build() {
   console.log("Lade Dataset von", DATASET_PATH);
   const pages = loadDataset();
   console.log("Seiten im Dataset:", pages.length);
@@ -102,7 +137,13 @@ function build() {
       chunks.push({ url: page.url, text: c.trim() });
     }
   }
-  console.log("Chunks erzeugt:", chunks.length);
+  console.log("Web-Crawl Chunks:", chunks.length);
+
+  console.log("\nVerarbeite PDFs...");
+  const pdfChunks = await loadPdfs();
+  chunks.push(...pdfChunks);
+  console.log("PDF Chunks gesamt:", pdfChunks.length);
+  console.log("Alle Chunks gesamt:", chunks.length);
 
   // Inverted Index: term -> [[chunkIdx, termFreq], ...]
   const invertedIndex = {};
@@ -146,4 +187,4 @@ function build() {
   console.log("Geschrieben:", INDEX_OUT);
 }
 
-build();
+build().catch(err => { console.error(err); process.exit(1); });

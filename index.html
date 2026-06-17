@@ -768,11 +768,25 @@ function addBot(text, audio, source, persist = true, sources = []) {
   if (sources && sources.length > 0) {
     const sl = document.createElement("div"); sl.className = "sources-list";
     const lbl2 = document.createElement("span"); lbl2.className = "src-label"; lbl2.textContent = "Quellen:"; sl.appendChild(lbl2);
+    const PDF_LABELS = {
+      "MODULHANDBUCH_MASTER_MIM_PO_2024.pdf": "Modulhandbuch MIM PO 2024",
+      "Sommersemester2026.pdf": "Semestertermine SS 2026",
+      "1NEU_Wintersemester2026_27.pdf": "Semestertermine WS 2026/27",
+      "1Neu_Sommersemester_2027.pdf": "Semestertermine SS 2027",
+      "Wintersemester2027_28.pdf": "Semestertermine WS 2027/28",
+    };
     sources.forEach(url => {
-      const clean = url.replace(/^https?:\/\/(www\.)?/,"").replace(/\/$/,"");
-      const a = document.createElement("a"); a.href = url; a.target = "_blank"; a.rel = "noopener";
-      a.textContent = clean.length > 50 ? clean.slice(0,50)+"…" : clean;
-      sl.appendChild(a);
+      if (url.startsWith("pdf://")) {
+        const filename = url.replace("pdf://", "");
+        const span = document.createElement("span");
+        span.textContent = PDF_LABELS[filename] || filename;
+        sl.appendChild(span);
+      } else {
+        const clean = url.replace(/^https?:\/\/(www\.)?/,"").replace(/\/$/,"");
+        const a = document.createElement("a"); a.href = url; a.target = "_blank"; a.rel = "noopener";
+        a.textContent = clean.length > 50 ? clean.slice(0,50)+"…" : clean;
+        sl.appendChild(a);
+      }
     });
     d.appendChild(sl);
   }

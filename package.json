@@ -1,0 +1,24 @@
+{
+  "name": "mim-chatbot",
+  "version": "1.0.0",
+  "description": "Chatbot in der Persona von Prof. Dr. Raphael Volz für den Master Industrial Management (MIM) der Hochschule Pforzheim. Entstanden im Rahmen des AI Capstone Project SS2026.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/olista01/mim-chatbot.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/olista01/mim-chatbot/issues"
+  },
+  "homepage": "https://github.com/olista01/mim-chatbot#readme",
+  "dependencies": {
+    "pdf-parse": "^1.1.1"
+  }
+}
