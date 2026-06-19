@@ -4,7 +4,7 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>MIM Chatbot · Hochschule Pforzheim</title>
-<meta name="description" content="Chatbot zum Master of Science Industrial Management der Hochschule Pforzheim. Antworten in der Stimme von Prof. Dr. Raphael Volz." />
+<meta name="description" content="Chatbot zum Master of Science Industrial Management der Hochschule Pforzheim. Fragen Sie Mimstein, Ihren KI-Assistenten für den MIM." />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Crimson+Pro:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -357,8 +357,8 @@
     <main class="main">
       <div class="page-head">
         <span class="kicker small-caps">Interview · Master Industrial Management</span>
-        <h1>Fragen Sie Prof. Volz</h1>
-        <p>Der Chatbot beantwortet Fragen zum Master Industrial Management — in der Stimme von Prof. Dr. Raphael Volz.</p>
+        <h1>Fragen Sie Mimstein</h1>
+        <p>Der Chatbot beantwortet Fragen zum Master Industrial Management — Ihr KI-Assistent für den MIM.</p>
       </div>
 
       <div class="chat-area" id="chat" role="log" aria-live="polite"></div>
@@ -397,7 +397,7 @@ const QA = [
     id: "intro",
     keywords: ["wer", "volz", "raphael", "prof", "professor", "bist du", "vorstellen"],
     chip: null,
-    answer: "Guten Tag, ich bin Prof. Dr. Raphael Volz. Ich unterrichte angewandte Informatik im Master Industrial Management an der Hochschule Pforzheim, insbesondere die Anwendungen der Künstlichen Intelligenz. Gemeinsam mit Kollege Moritz Peter betreue ich im Sommersemester 2026 das AI Capstone Project. Schön, dass Sie sich für unseren Studiengang interessieren.",
+    answer: "Guten Tag, ich bin Mimstein — Ihr KI-Assistent für den Master Industrial Management an der Hochschule Pforzheim. Ich helfe Ihnen bei Fragen rund um den Studiengang: Module, Fristen, Bewerbung und mehr. Schön, dass Sie sich für den MIM interessieren!",
     audio: "audio/01_intro.mp3"
   },
   {
@@ -592,12 +592,26 @@ function stopAudio() {
 }
 document.getElementById("stopAudio").addEventListener("click", stopAudio);
 
+async function fetchTTSUrl(text) {
+  try {
+    const res = await fetch("/api/tts", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ text }),
+    });
+    if (!res.ok) return null;
+    const blob = await res.blob();
+    return URL.createObjectURL(blob);
+  } catch { return null; }
+}
+
 async function play(text, audioPath, msgEl) {
   if (!audioOn) return;
   stopAudio();
   if (msgEl) msgEl.classList.add("playing");
-  if (audioPath) {
-    const a = new Audio(audioPath);
+  const src = audioPath || await fetchTTSUrl(text);
+  if (src) {
+    const a = new Audio(src);
     currentAudio = a;
     a.addEventListener("ended", () => { if (msgEl) msgEl.classList.remove("playing"); if (currentAudio === a) currentAudio = null; });
     a.addEventListener("error", () => {
@@ -723,7 +737,7 @@ function addUser(text, persist = true) {
 function addTyping() {
   clearEmpty();
   const d = document.createElement("div"); d.className = "turn bot";
-  const who = document.createElement("div"); who.className = "who small-caps"; who.textContent = "Prof. Volz";
+  const who = document.createElement("div"); who.className = "who small-caps"; who.textContent = "Mimstein";
   const b = document.createElement("div"); b.className = "typing-dots";
   b.innerHTML = "<span></span><span></span><span></span>";
   d.appendChild(who); d.appendChild(b);
@@ -752,7 +766,7 @@ function addBot(text, audio, source, persist = true, sources = []) {
   clearEmpty();
   const d = document.createElement("div"); d.className = "turn bot";
   const who = document.createElement("div"); who.className = "who small-caps";
-  const lbl = document.createElement("span"); lbl.textContent = "Prof. Volz"; who.appendChild(lbl);
+  const lbl = document.createElement("span"); lbl.textContent = "Mimstein"; who.appendChild(lbl);
   if (source) {
     const cls = source === "ai" ? "ai" : source === "match" ? "kb" : "fb";
     const label = source === "ai" ? "KI-Antwort" : source === "match" ? "Wissensbasis" : "Außerhalb";
