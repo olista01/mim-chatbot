@@ -1,17 +1,16 @@
 <!doctype html>
-<html lang="de">
+<html lang="en">
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>MIM Chatbot · Hochschule Pforzheim</title>
-<meta name="description" content="Chatbot zum Master of Science Industrial Management der Hochschule Pforzheim. Fragen Sie Mimstein, Ihren KI-Assistenten für den MIM." />
+<title>MIM Chatbot · Pforzheim University</title>
+<meta name="description" content="Chatbot for the Master of Science Industrial Management at Pforzheim University. Ask Mimstein, your AI assistant for the MIM programme." />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Crimson+Pro:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root {
     color-scheme: light;
-    /* Echte HSPF-Markenfarben (aus hs-pforzheim.de CSS), editoriale Transkript-Optik */
     --gold:       #FFBE31;
     --gold-text:  #8A6300;
     --blue-text:  #1934FF;
@@ -22,8 +21,7 @@
     --rule:       #DCD2B8;
   }
   * { box-sizing: border-box; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
-  html { scroll-behavior: smooth; }
-  html { height: 100%; }
+  html { scroll-behavior: smooth; height: 100%; }
   body {
     margin: 0; padding: 0;
     background: var(--paper);
@@ -43,7 +41,6 @@
   button { cursor: pointer; font-family: inherit; }
   .small-caps { text-transform: uppercase; letter-spacing: 0.09em; font-weight: 700; }
 
-  /* ── Logo-Wasserzeichen ── */
   .page-head { position: relative; overflow: hidden; }
   .page-head::before {
     content: ""; position: absolute; top: -10px; right: -30px;
@@ -54,7 +51,6 @@
   }
   .page-head > * { position: relative; z-index: 1; }
 
-  /* ── Zweispaltiges Layout: Sidebar + Hauptbereich ── */
   .layout { display: grid; grid-template-columns: 250px 1fr; gap: 0 48px; align-items: stretch; flex: 1; overflow: hidden; }
   .sidebar { padding: 32px 0; border-right: 1px solid var(--rule); overflow-y: auto; height: 100%; }
   .sidebar .kicker { color: var(--muted); font-size: 11px; display: block; margin-bottom: 14px; }
@@ -113,11 +109,7 @@
     .chat-area { flex: none; min-height: 320px; max-height: 55vh; }
   }
 
-  /* ── Header ── */
-  header.site {
-    border-bottom: 1px solid var(--rule);
-    padding: 18px 0;
-  }
+  header.site { border-bottom: 1px solid var(--rule); padding: 18px 0; }
   header.site .container { display: flex; justify-content: space-between; align-items: baseline; gap: 20px; }
   .wm { display: flex; flex-direction: column; line-height: 1.3; }
   .wm .top { font-size: 13px; color: var(--ink); }
@@ -135,7 +127,6 @@
   .audio-toggle.off:hover { border-bottom-color: var(--muted); }
   .audio-toggle svg { width: 13px; height: 13px; }
 
-  /* ── Page header / hero ── */
   .page-head { padding: 18px 0 14px; border-bottom: none; margin-bottom: 14px; }
   .page-head .kicker { color: var(--gold-text); font-size: 11px; margin-bottom: 6px; }
   .page-head h1 {
@@ -146,7 +137,6 @@
   }
   .page-head p { margin: 0; color: var(--muted); font-size: 14px; max-width: 56ch; }
 
-  /* ── Transcript: klar umrahmtes Chat-Fenster ── */
   .chat-area {
     padding: 18px 20px; display: flex; flex-direction: column;
     flex: 1; min-height: 0; overflow-y: auto;
@@ -161,13 +151,9 @@
   @keyframes appearIn { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }
   .turn { padding: 14px 0; border-bottom: 1px solid var(--rule); animation: appearIn 0.2s ease-out; }
   .turn:last-child { border-bottom: none; }
-  .turn .who {
-    display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
-    font-size: 11px; margin-bottom: 6px;
-  }
+  .turn .who { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; font-size: 11px; margin-bottom: 6px; }
   .turn.bot .who { color: var(--gold-text); }
 
-  /* ── User-Nachrichten rechtsbündig (chat-ui Muster) ── */
   .turn.user { text-align: right; }
   .turn.user .who { justify-content: flex-end; color: var(--muted); }
   .turn.user .body {
@@ -187,13 +173,10 @@
   }
   .turn .who .play:hover { color: var(--gold-text); border-bottom-color: var(--gold-text); }
   .turn.playing { background: var(--paper); margin: 0 -16px; padding: 14px 16px; border-radius: 2px; box-shadow: inset 2px 0 0 var(--gold); }
-  .source {
-    font-size: 10px; font-weight: 700; text-transform: uppercase;
-    letter-spacing: 0.08em; padding: 2px 7px; border-radius: 3px;
-  }
+  .source { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; padding: 2px 7px; border-radius: 3px; }
   .source.ai  { color: var(--gold-text); background: rgba(255,190,49,0.15); }
-  .source.kb  { color: var(--ink);       background: var(--paper-2); border: 1px solid var(--rule); }
-  .source.fb  { color: var(--muted);     background: var(--paper);   border: 1px solid var(--rule); }
+  .source.kb  { color: var(--ink); background: var(--paper-2); border: 1px solid var(--rule); }
+  .source.fb  { color: var(--muted); background: var(--paper); border: 1px solid var(--rule); }
   .sources-list {
     margin-top: 10px; padding-top: 8px; border-top: 1px solid var(--rule);
     font-size: 11px; color: var(--muted); font-family: 'Atkinson Hyperlegible', sans-serif;
@@ -204,21 +187,12 @@
   .sources-list a:hover { color: var(--gold-text); }
   .turn.bot .body { font-family: 'Crimson Pro', serif; font-size: 19px; line-height: 1.7; color: var(--ink); }
 
-  /* ── Typing indicator — drei animierte Punkte ── */
   .typing-dots { display: flex; gap: 5px; align-items: center; padding: 6px 0; }
-  .typing-dots span {
-    width: 7px; height: 7px; border-radius: 50%; background: var(--muted);
-    animation: dotBounce 1.2s ease-in-out infinite;
-    display: inline-block;
-  }
+  .typing-dots span { width: 7px; height: 7px; border-radius: 50%; background: var(--muted); animation: dotBounce 1.2s ease-in-out infinite; display: inline-block; }
   .typing-dots span:nth-child(2) { animation-delay: 0.2s; }
   .typing-dots span:nth-child(3) { animation-delay: 0.4s; }
-  @keyframes dotBounce {
-    0%, 60%, 100% { transform: translateY(0); opacity: 0.35; }
-    30% { transform: translateY(-5px); opacity: 1; }
-  }
+  @keyframes dotBounce { 0%, 60%, 100% { transform: translateY(0); opacity: 0.35; } 30% { transform: translateY(-5px); opacity: 1; } }
 
-  /* ── Vorschlagsfragen (jetzt in der Sidebar) ── */
   .chips { display: flex; flex-direction: column; gap: 0; }
   .chip {
     background: none; border: none; padding: 6px 0;
@@ -228,7 +202,6 @@
   }
   .chip:hover { color: var(--gold-text); }
 
-  /* ── Composer ── */
   .composer { display: flex; gap: 14px; align-items: flex-end; padding: 22px 0 10px; }
   .composer textarea {
     flex: 1;
@@ -251,7 +224,6 @@
   .send-btn:hover:not(:disabled) { color: var(--gold-text); }
   .send-btn:disabled { color: var(--muted); border-bottom-color: var(--rule); cursor: default; }
 
-  /* ── Footer actions ── */
   .panel-foot { display: flex; gap: 18px; padding: 4px 0 40px; }
   .panel-foot button {
     background: none; border: none; padding: 0;
@@ -261,7 +233,6 @@
   }
   .panel-foot button:hover { color: var(--gold-text); border-bottom-color: var(--gold-text); }
 
-  /* ── Site footer ── */
   footer.site { border-top: 1px solid var(--rule); padding: 18px 0 32px; color: var(--muted); font-size: 12px; }
   footer.site .container { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; }
 
@@ -269,7 +240,6 @@
     .page-head h1 { font-size: 28px; }
     .turn.bot .body { font-size: 17px; }
   }
-
   @media (prefers-reduced-motion: reduce) {
     *, .turn, .typing-text .cursor { animation: none !important; transition: none !important; }
   }
@@ -281,12 +251,12 @@
 <header class="site">
   <div class="container">
     <div class="wm">
-      <span class="top small-caps">Hochschule Pforzheim · Fakultät Technik</span>
+      <span class="top small-caps">Pforzheim University · School of Engineering</span>
       <span class="bot small-caps">MIM Chatbot</span>
     </div>
-    <button class="audio-toggle" id="audioToggle" aria-pressed="true" aria-label="Sprachausgabe an oder aus schalten">
+    <button class="audio-toggle" id="audioToggle" aria-pressed="true" aria-label="Toggle voice output on or off">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>
-      <span id="audioLabel">Stimme an</span>
+      <span id="audioLabel">Voice on</span>
     </button>
   </div>
 </header>
@@ -295,60 +265,60 @@
   <div class="layout">
 
     <aside class="sidebar">
-      <span class="kicker small-caps">Verlauf</span>
-      <button class="new-chat-btn" id="newChat">+ Neue Frage</button>
+      <span class="kicker small-caps">History</span>
+      <button class="new-chat-btn" id="newChat">+ New question</button>
       <div class="history-list" id="historyList"></div>
 
-      <span class="kicker small-caps" style="margin-top:22px;display:block;">Quick-Infos</span>
+      <span class="kicker small-caps" style="margin-top:22px;display:block;">At a glance</span>
 
       <details>
-        <summary>Studienverlauf</summary>
+        <summary>Curriculum</summary>
         <div class="panel-body">
-          <p>Idealtypischer Studienverlauf M.Sc. Industrial Management (PO 2024):</p>
+          <p>Typical study plan for M.Sc. Industrial Management (PO 2024):</p>
           <table class="curr-table">
-            <tr><th>Sem.</th><th>Modul</th><th>SWS</th><th>CP</th></tr>
+            <tr><th>Sem.</th><th>Module</th><th>SWS</th><th>CP</th></tr>
             <tr><td>1</td><td>Leadership</td><td>4</td><td>6</td></tr>
-            <tr><td>1</td><td>Vernetzte Systeme &amp; KI</td><td>4</td><td>6</td></tr>
-            <tr><td>1</td><td>Forschungsmethoden &amp; Innovation</td><td>4</td><td>6</td></tr>
-            <tr><td>1–2</td><td>Interdiszipl. Innovationsprojekt</td><td>6</td><td>9</td></tr>
-            <tr><td>1–2</td><td>Wahlpflichtfächer „Fokus"</td><td>6</td><td>9</td></tr>
+            <tr><td>1</td><td>Networked Systems &amp; AI</td><td>4</td><td>6</td></tr>
+            <tr><td>1</td><td>Research Methods &amp; Innovation</td><td>4</td><td>6</td></tr>
+            <tr><td>1–2</td><td>Interdisciplinary Innovation Project</td><td>6</td><td>9</td></tr>
+            <tr><td>1–2</td><td>Electives "Focus"</td><td>6</td><td>9</td></tr>
             <tr><td>1–2</td><td>Major Industrial Management I</td><td>4</td><td>6</td></tr>
             <tr><td>1–2</td><td>Major (Engineering/Business/IM II)</td><td>4</td><td>6</td></tr>
-            <tr><td>2</td><td>Technologiemgmt. &amp; Verhandlung</td><td>4</td><td>6</td></tr>
-            <tr><td>2</td><td>Prozesse &amp; Daten</td><td>4</td><td>6</td></tr>
+            <tr><td>2</td><td>Technology Mgmt. &amp; Negotiation</td><td>4</td><td>6</td></tr>
+            <tr><td>2</td><td>Processes &amp; Data</td><td>4</td><td>6</td></tr>
             <tr><td>3</td><td>Capstone</td><td>4</td><td>6</td></tr>
-            <tr><td>3</td><td>Master-Thesis</td><td>—</td><td>24</td></tr>
+            <tr><td>3</td><td>Master Thesis</td><td>—</td><td>24</td></tr>
           </table>
         </div>
       </details>
 
       <details>
-        <summary>Bewerbung &amp; Fristen</summary>
+        <summary>Application &amp; deadlines</summary>
         <div class="panel-body">
-          <p>Bewerbungsschluss Sommersemester: <strong>15. Januar</strong>. Wintersemester: <strong>15. Juni</strong>. Zulassung per Auswahlverfahren, 24 Studienplätze.</p>
-          <p><a href="https://campus.hs-pforzheim.de/qisserver/pages/psv/selbstregistrierung/pub/selbstregistrierung.xhtml" target="_blank" rel="noopener">Zum Bewerbungsportal ↗</a></p>
+          <p>Application deadline for the summer semester: <strong>15 January</strong>. Winter semester: <strong>15 June</strong>. Admission via selection procedure, 24 study places.</p>
+          <p><a href="https://campus.hs-pforzheim.de/qisserver/pages/psv/selbstregistrierung/pub/selbstregistrierung.xhtml" target="_blank" rel="noopener">Open application portal ↗</a></p>
         </div>
       </details>
 
       <details>
-        <summary>Kontakte</summary>
+        <summary>Contacts</summary>
         <div class="panel-body">
-          <p><strong>Prof. Dr. Ansgar Kühn</strong> (Studiengangleiter)<br>Raum T1.5.23 · Mi 9:45–11:15<br>Tel. 07231 28-6490</p>
-          <p><strong>Lisa Kaiser</strong> (Koordination)<br>Raum T1.5.21 · Tel. 07231 28-6472</p>
-          <p>Sekretariat WI: Tel. 07231 28-6056</p>
+          <p><strong>Prof. Dr. Ansgar Kühn</strong> (Programme Director)<br>Room T1.5.23 · Wed 9:45–11:15<br>Phone +49 7231 28-6490</p>
+          <p><strong>Lisa Kaiser</strong> (Coordinator)<br>Room T1.5.21 · Phone +49 7231 28-6472</p>
+          <p>Industrial Engineering Office: Phone +49 7231 28-6056</p>
         </div>
       </details>
 
       <details open>
-        <summary>Themen schnell fragen</summary>
+        <summary>Quick topics</summary>
         <div class="panel-body">
           <div class="chips" id="suggestions">
-            <button class="chip" data-q="capstone">Capstone-Aufgabe</button>
-            <button class="chip" data-q="studienverlauf">Studienverlauf</button>
+            <button class="chip" data-q="capstone">Capstone assignment</button>
+            <button class="chip" data-q="studienverlauf">Study plan</button>
             <button class="chip" data-q="majors">Majors 7a/7b/7c</button>
             <button class="chip" data-q="english">English Track</button>
             <button class="chip" data-q="seminarb">Seminar IM B</button>
-            <button class="chip" data-q="thesis">Master-Thesis</button>
+            <button class="chip" data-q="thesis">Master Thesis</button>
           </div>
         </div>
       </details>
@@ -357,20 +327,20 @@
     <main class="main">
       <div class="page-head">
         <span class="kicker small-caps">Interview · Master Industrial Management</span>
-        <h1>Fragen Sie Mimstein</h1>
-        <p>Der Chatbot beantwortet Fragen zum Master Industrial Management — Ihr KI-Assistent für den MIM.</p>
+        <h1>Ask Mimstein</h1>
+        <p>The chatbot answers questions about the Master Industrial Management programme — your AI assistant for the MIM.</p>
       </div>
 
       <div class="chat-area" id="chat" role="log" aria-live="polite"></div>
 
       <form class="composer" id="form">
-        <textarea id="input" placeholder="Ihre Frage …" rows="1" autocomplete="off" aria-label="Frage eingeben"></textarea>
-        <button type="submit" class="send-btn" id="send" disabled aria-label="Nachricht senden">Senden →</button>
+        <textarea id="input" placeholder="Your question …" rows="1" autocomplete="off" aria-label="Type your question"></textarea>
+        <button type="submit" class="send-btn" id="send" disabled aria-label="Send message">Send →</button>
       </form>
 
       <div class="panel-foot">
-        <button id="stopAudio" aria-label="Audiowiedergabe stoppen">Audio stoppen</button>
-        <button id="resetChat" aria-label="Unterhaltung zurücksetzen">Zurücksetzen</button>
+        <button id="stopAudio" aria-label="Stop audio playback">Stop audio</button>
+        <button id="resetChat" aria-label="Reset conversation">Reset</button>
       </div>
     </main>
 
@@ -379,177 +349,83 @@
 
 <footer class="site">
   <div class="container">
-    <span>© Hochschule Pforzheim · Prototyp im Rahmen des AI Capstone Project SS 2026</span>
-    <span>Nicht offizielles Angebot der Hochschule</span>
+    <span>© Pforzheim University · Prototype built for the AI Capstone Project SS 2026</span>
+    <span>Not an official offering of the university</span>
   </div>
 </footer>
 
 <script>
-/* ============================================================
- * WISSENSBASIS — vordefinierte Q&A-Paare mit Audio-Dateien
- *
- * Audio-Dateien gehören in den Ordner /audio/ neben dieser HTML.
- * Wenn eine MP3 fehlt, fällt der Bot auf Browser-TTS zurück
- * (mit deutscher Standardstimme statt Volz' Stimme).
- * ===========================================================*/
 const QA = [
-  {
-    id: "intro",
-    keywords: ["wer", "volz", "raphael", "prof", "professor", "bist du", "vorstellen"],
-    chip: null,
-    answer: "Guten Tag, ich bin Mimstein — Ihr KI-Assistent für den Master Industrial Management an der Hochschule Pforzheim. Ich helfe Ihnen bei Fragen rund um den Studiengang: Module, Fristen, Bewerbung und mehr. Schön, dass Sie sich für den MIM interessieren!",
-    audio: "audio/01_intro.mp3"
-  },
-  {
-    id: "ueberblick",
-    keywords: ["mim", "studiengang", "worum", "uberblick", "überblick", "was ist", "industrial management"],
-    chip: null,
-    answer: "Der Master Industrial Management ist ein dreisemestriger Master of Science mit 90 ECTS. Im Mittelpunkt stehen Technologie- und Innovationsmanagement, Leadership, Prozesse und Daten sowie Vernetzte Systeme und Künstliche Intelligenz. Studiengangsleitung ist Kollege Prof. Dr. Ansgar Kühn.",
-    audio: "audio/02_ueberblick.mp3"
-  },
-  {
-    id: "capstone",
-    keywords: ["capstone", "aufgabe", "abgabe", "abgeben", "film", "chatbot", "moodle", "präsentation", "praesentation"],
-    chip: "capstone",
-    answer: "Im AI Capstone Project im Sommersemester 2026 gibt es zwei Aufgaben. Erstens einen dreiminütigen Film über das MEM- oder MIM-Programm unter Einsatz generativer KI. Zweitens einen Chatbot in der Stimme von Kollege Peter oder mir. Abgabe ist am 24. Juni 2026 um 15 Uhr auf Moodle. Die Präsentationen finden am selben Tag ab 15:30 Uhr statt, jede Gruppe hat 15 Minuten.",
-    audio: "audio/03_capstone.mp3"
-  },
-  {
-    id: "studienverlauf",
-    keywords: ["verlauf", "studienverlauf", "semester", "aufbau", "module", "1.", "2.", "3."],
-    chip: "studienverlauf",
-    answer: "Im ersten Semester liegen die Pflichtmodule Leadership, Vernetzte Systeme und Künstliche Intelligenz sowie Forschungsmethoden und Innovation. Über das erste und zweite Semester laufen das interdisziplinäre Innovationsprojekt, die Wahlpflichtfächer Fokus und der gewählte Major. Im zweiten Semester kommen Technologiemanagement mit Verhandlungsführung sowie Prozesse und Daten hinzu. Das dritte Semester gehört dem Capstone-Seminar und der Master-Thesis.",
-    audio: "audio/04_studienverlauf.mp3"
-  },
-  {
-    id: "majors",
-    keywords: ["major", "engineering", "business", "7a", "7b", "7c", "vorqualifikation", "schnell"],
-    chip: "majors",
-    answer: "Die Major-Wahl hängt von Ihrer Eingangsqualifikation ab und wird in einer verbindlichen Studienvereinbarung mit der Studiengangsleitung festgelegt. Major Engineering, also Variante 7a, ist für Studierende ohne einschlägiges technisches Bachelorstudium gedacht. Major Business, Variante 7b, richtet sich an Studierende mit technischem Bachelor und vermittelt betriebswirtschaftliche Grundlagen. Major Industrial Management Zwei, Variante 7c, ist für jene mit beiden Vorqualifikationen wie etwa Wirtschaftsingenieure.",
-    audio: "audio/05_majors.mp3"
-  },
-  {
-    id: "english",
-    keywords: ["english", "englisch", "track", "english track", "international", "fremdsprache"],
-    chip: "english",
-    answer: "Der English Track ist die rein englischsprachige Vertiefung des MIM, vorrangig für Bewerberinnen und Bewerber ohne ausreichende Deutschkenntnisse. Es stehen bis zu sechs Studienplätze zur Verfügung, der Start ist ausschließlich im Wintersemester. Durch die Kombination englischsprachiger MIM-Vorlesungen mit Veranstaltungen aus dem Master Engineering and Management werden 90 ECTS auf Englisch ermöglicht.",
-    audio: "audio/06_english.mp3"
-  },
-  {
-    id: "seminarb",
-    keywords: ["seminar b", "seminarb", "aerospace", "griebel", "luftfahrt", "raumfahrt"],
-    chip: "seminarb",
-    answer: "Seminar Industrial Management B trägt den Titel Management of Complex, International Projects in Aerospace, Aviation and Spaceflight. Es ist ein dreitägiger Pflichtkurs bei Dr. Hannes Griebel, Fellow der Royal Aeronautical Society und Director bei CGI. Behandelt werden die Komplexität internationaler Großprojekte am Beispiel von Apollo, Concorde, ISS, Airbus A380 oder den Artemis-Missionen.",
-    audio: "audio/07_seminarb.mp3"
-  },
-  {
-    id: "seminara",
-    keywords: ["seminar a", "seminara", "six sigma", "dmaic", "qualität", "qualitaet"],
-    chip: null,
-    answer: "Seminar Industrial Management A behandelt die Six-Sigma-Methodik mit den Phasen Define, Measure, Analyze, Improve und Control. Inhalte sind unter anderem Voice of the Customer, SIPOC-Diagramme, Hypothesentests, Failure Mode and Effects Analysis sowie Lean-Prinzipien. Sie üben die Methodik in der Praxis ein.",
-    audio: "audio/08_seminara.mp3"
-  },
-  {
-    id: "thesis",
-    keywords: ["thesis", "masterthesis", "abschlussarbeit", "master-thesis", "betreuer"],
-    chip: "thesis",
-    answer: "Die Master-Thesis umfasst 24 ECTS und kann frühestens im zweiten Fachsemester ausgegeben werden. Erwartet werden 70 bis 100 Seiten zur selbstständigen wissenschaftlichen Bearbeitung eines Problems aus dem Wirtschaftsingenieurwesen. Betreuende sind alle Professorinnen und Professoren des Bereichs.",
-    audio: "audio/09_thesis.mp3"
-  },
-  {
-    id: "ki",
-    keywords: ["ki", "ai", "künstliche intelligenz", "kuenstliche intelligenz", "vernetzt", "machine learning", "transformer"],
-    chip: null,
-    answer: "Im Modul Vernetzte Systeme und Künstliche Intelligenz verantworte ich den KI-Teil zusammen mit Lukas Vaessen. Wir behandeln Machine Learning, Transformer und Large Language Models, sehen uns Anwendungen wie ChatGPT und Midjourney an und diskutieren Ethik. Den Teil zu vernetzten Systemen übernimmt Kollege Kölmel mit IoT, Industrie 4.0 und Smart Cities.",
-    audio: "audio/10_ki.mp3"
-  },
-  {
-    id: "leadership",
-    keywords: ["leadership", "führung", "fuehrung", "mahadevan", "eireiner", "ted talk"],
-    chip: null,
-    answer: "Das Modul Leadership im ersten Semester wird von Kollegin Mahadevan zusammen mit Kollegin Eireiner gestaltet. Inhalte sind unter anderem virtuelle Teamzusammenarbeit, Führungsmindset und kulturelle Intelligenz. Im Teil Applied Leadership bei Eireiner schreiben Sie eine fünf- bis siebenseitige TED-Talks-Reflexion, abzugeben bis zum 9. Januar 2026 per E-Mail.",
-    audio: "audio/11_leadership.mp3"
-  },
-  {
-    id: "schnell",
-    keywords: ["schnell", "kostenrechnung", "finanzierung", "bwl", "controlling"],
-    chip: null,
-    answer: "Kollege Schnell unterrichtet im Sommersemester 2026 den Kurs Kostenrechnung und Finanzierung im Rahmen von Major Business. Inhalte sind die Grundlagen der Kostenrechnung, Zielkosten-, Lebenszyklus-, Prozesskosten- und Deckungsbeitragsrechnung sowie abschließend Finanzierung. Der Kurs ist auf Deutsch und beginnt am Mittwoch, dem 8. April 2026 um 11:30 Uhr.",
-    audio: "audio/12_schnell.mp3"
-  },
-  {
-    id: "duwe",
-    keywords: ["duwe", "technologiemanagement", "tim", "innovationsmanagement", "verhandlung"],
-    chip: null,
-    answer: "Den Teil Technologie- und Innovationsmanagement im Modul Technologiemanagement und Verhandlungsführung übernimmt Dr.-Ing. Daniel Duwe als Lehrbeauftragter. Die Termine im Sommersemester 2026 sind ganztägig von 8 bis 17 Uhr am 27. März, am 24. April und am 22. Mai, wobei der letzte Termin Gastvortrag und Prüfung enthält. Den Verhandlungsteil verantwortet Kollege Peter selbst.",
-    audio: "audio/13_duwe.mp3"
-  },
-  {
-    id: "pruefungen",
-    keywords: ["prüfung", "pruefung", "klausur", "plk", "plh", "plp", "plr", "note", "bewertung"],
-    chip: null,
-    answer: "Im MIM begegnen Sie verschiedenen Prüfungsformen. PLK steht für Klausur, PLH für Hausarbeit, PLM für mündliche Prüfung, PLP für Projektarbeit, PLR für Referat und PLT für die Thesis. Manche Veranstaltungen werden als unbenotete Prüfungsleistung, kurz UPL, geführt, also mit bestanden oder nicht bestanden.",
-    audio: "audio/14_pruefungen.mp3"
-  },
-  {
-    id: "bewerbung",
-    keywords: ["bewerbung", "bewerben", "frist", "fristen", "wintersemester", "sommersemester", "semesterbeginn", "studienbeginn", "beginnt das ws", "beginnt das ss", "zulassung", "auswahlverfahren"],
-    chip: null,
-    answer: "Der Studienbeginn ist sowohl zum Sommer- als auch zum Wintersemester möglich. Bewerbungsschluss für das Sommersemester ist der 15. Januar, für das Wintersemester der 15. Juni. Die Zulassung erfolgt über ein Auswahlverfahren, die Bewerbung läuft über das Bewerbungsportal der Hochschule Pforzheim. Es stehen insgesamt 24 Studienplätze zur Verfügung.",
-    audio: null
-  },
-  {
-    id: "leitung",
-    keywords: ["kühn", "kuehn", "studiengangleiter", "ansgar", "lisa kaiser", "koordinatorin", "sekretariat"],
-    chip: null,
-    answer: "Studiengangleiter ist Kollege Prof. Dr. Ansgar Kühn, Fachgebiet Operations Management, Raum T1.5.23, Kolloquiumzeit mittwochs von 9:45 bis 11:15 Uhr, Telefon 07231 28-6490. Studiengangkoordinatorin ist Lisa Kaiser, Raum T1.5.21, Telefon 07231 28-6472. Das Sekretariat Wirtschaftsingenieurwesen erreichen Sie unter 07231 28-6056.",
-    audio: null
-  },
-  {
-    id: "infotag",
-    keywords: ["infotag", "master-infotag", "masterinfotag"],
-    chip: null,
-    answer: "Der Master-Infotag der Fakultät für Technik findet am Donnerstag, dem 16. April 2026, ab 17:25 Uhr im Hörsaal THB statt. Nach der Begrüßung gibt es zwei Runden zur Vorstellung der Master-Studiengänge, darunter Industrial Management, mit Möglichkeit für Rückfragen. Die Anmeldung läuft über die Infotag-Seite der Hochschule Pforzheim.",
-    audio: null
-  },
-  {
-    id: "auslandssemester",
-    keywords: ["auslandssemester", "ausland", "partneruniversität", "partneruniversitaet"],
-    chip: null,
-    answer: "Ein Auslandssemester an einer Partneruniversität weltweit ist im Industrial Management möglich. Details zur Organisation und den Partnerhochschulen erfragen Sie am besten beim International Office oder Studiengangsbüro der Hochschule Pforzheim.",
-    audio: null
-  },
-  {
-    id: "akkreditierung",
-    keywords: ["akkreditierung", "akkreditiert"],
-    chip: null,
-    answer: "Im Juli 2024 wurden alle Studiengänge der Fakultät für Technik erfolgreich akkreditiert, ohne jegliche Auflagen. Gelobt wurden die hohe Qualität der Lehrinhalte, die Kompetenz der Dozenten und die ausgezeichnete Ausstattung der Lehr- und Forschungseinrichtungen.",
-    audio: null
-  },
-  {
-    id: "berufsfelder",
-    keywords: ["berufsfeld", "berufsfelder", "karriere", "jobs nach dem studium"],
-    chip: null,
-    answer: "Der Master Industrial Management qualifiziert für führende Management-Positionen in technischen oder interdisziplinären Unternehmensbereichen, sowohl national als auch international.",
-    audio: null
-  },
-  {
-    id: "kontakt",
-    keywords: ["gebühren", "gebuehren", "studiengangsbüro", "studiengangsbuero", "kontakt", "ansprechpartner"],
-    chip: null,
-    answer: "Konkrete Studiengebühren gehören nicht in mein Repertoire. Wenden Sie sich dafür bitte an das Studiengangsbüro der Fakultät Engineering der Hochschule Pforzheim.",
-    audio: "audio/15_kontakt.mp3"
-  },
+  { id: "intro", keywords: ["who", "you", "introduce", "wer", "volz", "raphael", "prof", "professor", "bist du", "vorstellen"], chip: null,
+    answer: "Hello, I am Mimstein — your AI assistant for the Master Industrial Management at Pforzheim University. I help you with questions about the programme: modules, deadlines, application and more. Nice that you are interested in the MIM!",
+    audio: "audio/01_intro.mp3" },
+  { id: "overview", keywords: ["mim", "programme", "program", "about", "overview", "what is", "industrial management", "studiengang", "worum", "uberblick", "überblick", "was ist"], chip: null,
+    answer: "The Master Industrial Management is a three-semester Master of Science with 90 ECTS. It focuses on Technology and Innovation Management, Leadership, Processes and Data, and Networked Systems and Artificial Intelligence. The programme director is Prof. Dr. Ansgar Kühn.",
+    audio: "audio/02_ueberblick.mp3" },
+  { id: "capstone", keywords: ["capstone", "assignment", "submission", "deadline", "film", "chatbot", "moodle", "presentation", "aufgabe", "abgabe", "abgeben", "präsentation"], chip: "capstone",
+    answer: "The AI Capstone Project in the summer semester 2026 has two tasks. First, a three-minute film about the MEM or MIM programme using generative AI. Second, a chatbot in the voice of Prof. Peter or Prof. Volz. Submission is due on 24 June 2026 at 3 p.m. on Moodle. The presentations take place the same day from 3:30 p.m., 15 minutes per group.",
+    audio: "audio/03_capstone.mp3" },
+  { id: "studyplan", keywords: ["plan", "study plan", "semester", "structure", "modules", "1st", "2nd", "3rd", "verlauf", "studienverlauf", "aufbau", "module"], chip: "studienverlauf",
+    answer: "In the first semester you take the compulsory modules Leadership, Networked Systems and Artificial Intelligence, and Research Methods and Innovation. The Interdisciplinary Innovation Project, the Electives Focus and the chosen Major span the first and second semesters. In the second semester Technology Management with Negotiation and Processes and Data are added. The third semester is dedicated to the Capstone seminar and the Master Thesis.",
+    audio: "audio/04_studienverlauf.mp3" },
+  { id: "majors", keywords: ["major", "engineering", "business", "7a", "7b", "7c", "qualification", "schnell", "vorqualifikation"], chip: "majors",
+    answer: "The choice of Major depends on your entry qualification and is fixed in a binding study agreement with the programme director. Major Engineering, variant 7a, is for students without a relevant technical bachelor's degree. Major Business, variant 7b, is for students with a technical bachelor's degree and teaches business foundations. Major Industrial Management Two, variant 7c, is for those with both qualifications, for example industrial engineers.",
+    audio: "audio/05_majors.mp3" },
+  { id: "english", keywords: ["english", "english track", "international", "foreign", "englisch", "track", "fremdsprache"], chip: "english",
+    answer: "The English Track is the fully English-language specialisation of the MIM, primarily for applicants without sufficient German skills. Up to six study places are available, and the start is only in the winter semester. By combining English-language MIM lectures with courses from the Master of Engineering and Management, 90 ECTS in English are achievable.",
+    audio: "audio/06_english.mp3" },
+  { id: "seminarb", keywords: ["seminar b", "seminarb", "aerospace", "griebel", "aviation", "spaceflight", "luftfahrt", "raumfahrt"], chip: "seminarb",
+    answer: "Seminar Industrial Management B is titled Management of Complex, International Projects in Aerospace, Aviation and Spaceflight. It is a three-day compulsory course taught by Dr. Hannes Griebel, Fellow of the Royal Aeronautical Society and Director at CGI. The course covers the complexity of large international projects with examples such as Apollo, Concorde, ISS, Airbus A380 and the Artemis missions.",
+    audio: "audio/07_seminarb.mp3" },
+  { id: "seminara", keywords: ["seminar a", "seminara", "six sigma", "dmaic", "quality", "qualität", "qualitaet"], chip: null,
+    answer: "Seminar Industrial Management A covers the Six Sigma methodology with its phases Define, Measure, Analyze, Improve and Control. Topics include Voice of the Customer, SIPOC diagrams, hypothesis testing, Failure Mode and Effects Analysis and lean principles. You practise the methodology hands-on.",
+    audio: "audio/08_seminara.mp3" },
+  { id: "thesis", keywords: ["thesis", "master thesis", "masterthesis", "abschlussarbeit", "supervisor", "betreuer"], chip: "thesis",
+    answer: "The Master Thesis is worth 24 ECTS and can be started no earlier than the second semester. You are expected to deliver 70 to 100 pages of independent academic work on a problem from the field of industrial engineering. All professors of the department are eligible as supervisors.",
+    audio: "audio/09_thesis.mp3" },
+  { id: "ai", keywords: ["ai", "ki", "artificial intelligence", "künstliche intelligenz", "machine learning", "transformer", "networked", "vernetzt"], chip: null,
+    answer: "In the module Networked Systems and Artificial Intelligence I, Raphael Volz, teach the AI part together with Lukas Vaessen. We cover machine learning, transformers and large language models, look at applications such as ChatGPT and Midjourney and discuss ethics. The networked systems part is handled by Prof. Kölmel and covers IoT, Industry 4.0 and smart cities.",
+    audio: "audio/10_ki.mp3" },
+  { id: "leadership", keywords: ["leadership", "mahadevan", "eireiner", "ted talk", "führung"], chip: null,
+    answer: "The Leadership module in the first semester is taught by Prof. Mahadevan together with Prof. Eireiner. Topics include virtual team collaboration, leadership mindset and cultural intelligence. In the Applied Leadership part with Eireiner you write a five-to-seven-page TED Talks reflection, to be submitted by 9 January by e-mail.",
+    audio: "audio/11_leadership.mp3" },
+  { id: "schnell", keywords: ["schnell", "cost accounting", "financing", "kostenrechnung", "finanzierung", "controlling"], chip: null,
+    answer: "Prof. Schnell teaches the course Cost Accounting and Financing in the summer semester 2026 as part of Major Business. Topics cover the basics of cost accounting, target costing, life-cycle costing, activity-based costing and contribution margin accounting, as well as financing. The course is held in German and starts on Wednesday, 8 April 2026 at 11:30 a.m.",
+    audio: "audio/12_schnell.mp3" },
+  { id: "duwe", keywords: ["duwe", "technology management", "innovation management", "negotiation", "technologiemanagement", "verhandlung", "tim"], chip: null,
+    answer: "The Technology and Innovation Management part of the module Technology Management and Negotiation is taught by Dr.-Ing. Daniel Duwe as a guest lecturer. The dates in the summer semester 2026 are full-day sessions from 8 a.m. to 5 p.m. on 27 March, 24 April and 22 May, with a guest lecture and exam on the final date. The negotiation part is taught by Prof. Peter himself.",
+    audio: "audio/13_duwe.mp3" },
+  { id: "exams", keywords: ["exam", "exams", "examination", "klausur", "plk", "plh", "plp", "plr", "grade", "pruefung", "prüfung", "bewertung"], chip: null,
+    answer: "In the MIM programme you encounter several examination formats. PLK is a written exam, PLH a term paper, PLM an oral exam, PLP a project work, PLR a presentation and PLT the thesis. Some courses are graded as ungraded examinations, abbreviated UPL, meaning pass or fail.",
+    audio: "audio/14_pruefungen.mp3" },
+  { id: "application", keywords: ["application", "apply", "deadline", "winter semester", "summer semester", "start", "admission", "selection", "bewerbung", "frist", "zulassung"], chip: null,
+    answer: "You can start the programme in either the summer or the winter semester. The application deadline for the summer semester is 15 January, for the winter semester it is 15 June. Admission is based on a selection procedure and the application runs through the central application portal of Pforzheim University. There are 24 study places in total.",
+    audio: null },
+  { id: "director", keywords: ["kühn", "kuehn", "director", "ansgar", "lisa kaiser", "coordinator", "office", "sekretariat", "studiengangleiter"], chip: null,
+    answer: "The programme director is Prof. Dr. Ansgar Kühn, specialising in Operations Management, room T1.5.23, with office hours on Wednesdays from 9:45 to 11:15 a.m., phone +49 7231 28-6490. The programme coordinator is Lisa Kaiser, room T1.5.21, phone +49 7231 28-6472. The Industrial Engineering office can be reached at +49 7231 28-6056.",
+    audio: null },
+  { id: "infoday", keywords: ["info day", "infotag", "master infoday", "open day", "master-infotag"], chip: null,
+    answer: "The Master Info Day of the School of Engineering takes place on Thursday, 16 April 2026, from 5:25 p.m. in lecture hall THB. After the welcome there are two rounds presenting the master programmes, including Industrial Management, with the opportunity to ask questions. Registration is via the Info Day page of Pforzheim University.",
+    audio: null },
+  { id: "exchange", keywords: ["exchange", "abroad", "partner university", "auslandssemester", "ausland", "partneruniversität"], chip: null,
+    answer: "An exchange semester at a partner university worldwide is possible during the Industrial Management programme. For details on organisation and the list of partner universities, please contact the International Office or the programme office of Pforzheim University.",
+    audio: null },
+  { id: "accreditation", keywords: ["accreditation", "accredited", "akkreditierung", "akkreditiert"], chip: null,
+    answer: "In July 2024 all programmes of the School of Engineering were successfully accredited without any conditions. The quality of the teaching content, the expertise of the lecturers and the equipment of the teaching and research facilities were specifically commended.",
+    audio: null },
+  { id: "careers", keywords: ["career", "careers", "job", "jobs", "after graduation", "berufsfeld", "karriere"], chip: null,
+    answer: "The Master Industrial Management qualifies you for leading management positions in technical or interdisciplinary business areas, both nationally and internationally.",
+    audio: null },
+  { id: "contact", keywords: ["fees", "tuition", "contact", "office", "gebühren", "studiengangsbüro", "ansprechpartner"], chip: null,
+    answer: "Specific tuition fees are not part of my knowledge base. For these enquiries please contact the programme office of the School of Engineering at Pforzheim University directly.",
+    audio: "audio/15_kontakt.mp3" },
 ];
 
 const FALLBACK = {
-  answer: "Diese Frage liegt außerhalb meiner Wissensbasis. Für individuelle Auskünfte wenden Sie sich bitte direkt an das Studiengangsbüro der Fakultät Engineering der Hochschule Pforzheim.",
+  answer: "This question is outside my knowledge base. For individual enquiries please contact the programme office of the School of Engineering at Pforzheim University directly.",
   audio: "audio/00_fallback.mp3"
 };
 
-/* ============================================================
- * Keyword-Matching
- * ===========================================================*/
 function findAnswer(query) {
   const q = query.toLowerCase().replace(/[.,!?;:]/g, " ");
   const tokens = q.split(/\s+/).filter(Boolean);
@@ -564,21 +440,15 @@ function findAnswer(query) {
   }
   return bestScore >= 2 ? best : null;
 }
-function findByChip(chipId) {
-  for (const item of QA) if (item.chip === chipId) return item;
-  return null;
-}
+function findByChip(chipId) { for (const item of QA) if (item.chip === chipId) return item; return null; }
 
-/* ============================================================
- * Audio playback — versucht MP3, sonst Browser-TTS
- * ===========================================================*/
 let audioOn = (localStorage.getItem("mim_audio_on") || "1") === "1";
 const audioToggle = document.getElementById("audioToggle");
 const audioLabel = document.getElementById("audioLabel");
 function updateAudioToggle() {
   audioToggle.classList.toggle("off", !audioOn);
   audioToggle.setAttribute("aria-pressed", String(audioOn));
-  audioLabel.textContent = audioOn ? "Stimme an" : "Stimme aus";
+  audioLabel.textContent = audioOn ? "Voice on" : "Voice off";
 }
 updateAudioToggle();
 audioToggle.addEventListener("click", () => { audioOn = !audioOn; localStorage.setItem("mim_audio_on", audioOn ? "1" : "0"); updateAudioToggle(); if (!audioOn) stopAudio(); });
@@ -594,11 +464,7 @@ document.getElementById("stopAudio").addEventListener("click", stopAudio);
 
 async function fetchTTSUrl(text) {
   try {
-    const res = await fetch("/api/tts", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ text }),
-    });
+    const res = await fetch("/api/tts", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ text }) });
     if (!res.ok) return null;
     const blob = await res.blob();
     return URL.createObjectURL(blob);
@@ -609,30 +475,24 @@ async function play(text, audioPath, msgEl) {
   if (!audioOn) return;
   stopAudio();
   if (msgEl) msgEl.classList.add("playing");
-  const src = audioPath || await fetchTTSUrl(text);
+  const src = await fetchTTSUrl(text);
   if (src) {
     const a = new Audio(src);
     currentAudio = a;
     a.addEventListener("ended", () => { if (msgEl) msgEl.classList.remove("playing"); if (currentAudio === a) currentAudio = null; });
-    a.addEventListener("error", () => {
-      if (msgEl) msgEl.classList.remove("playing");
-      currentAudio = null;
-      ttsFallback(text, msgEl);
-    });
+    a.addEventListener("error", () => { if (msgEl) msgEl.classList.remove("playing"); currentAudio = null; ttsFallback(text, msgEl); });
     try { await a.play(); } catch (e) { ttsFallback(text, msgEl); }
-  } else {
-    ttsFallback(text, msgEl);
-  }
+  } else { ttsFallback(text, msgEl); }
 }
 function ttsFallback(text, msgEl) {
   if (!window.speechSynthesis) { if (msgEl) msgEl.classList.remove("playing"); return; }
   if (msgEl) msgEl.classList.add("playing");
   const voices = window.speechSynthesis.getVoices();
-  const malePref = ["markus", "stefan", "yannick", "conrad"];
-  const v = voices.find(v => v.lang.startsWith("de") && malePref.some(m => v.name.toLowerCase().includes(m)))
-         || voices.find(v => v.lang.startsWith("de")) || null;
+  const malePref = ["daniel", "alex", "fred", "tom"];
+  const v = voices.find(v => v.lang.startsWith("en") && malePref.some(m => v.name.toLowerCase().includes(m)))
+         || voices.find(v => v.lang.startsWith("en")) || null;
   const u = new SpeechSynthesisUtterance(text);
-  if (v) { u.voice = v; u.lang = v.lang; } else u.lang = "de-DE";
+  if (v) { u.voice = v; u.lang = v.lang; } else u.lang = "en-US";
   u.rate = 0.95; u.pitch = 0.95;
   if (msgEl) {
     u.onend = () => { msgEl.classList.remove("playing"); if (currentUtterance === u) currentUtterance = null; };
@@ -642,40 +502,30 @@ function ttsFallback(text, msgEl) {
   window.speechSynthesis.speak(u);
 }
 
-/* ============================================================
- * UI / Chat-Historie — mehrere Unterhaltungen, lokal gespeichert
- * ===========================================================*/
 const CHATS_KEY = "mim_chats_v1";
 const ACTIVE_KEY = "mim_active_chat_v1";
-const OLD_HIST_KEY = "mim_offline_hist_v1"; // Migration von der alten Einzel-Historie
+const OLD_HIST_KEY = "mim_offline_hist_v1";
 const $ = id => document.getElementById(id);
 const chatEl = $("chat"), inputEl = $("input"), formEl = $("form"), sendEl = $("send"), historyListEl = $("historyList");
 
 let chats = (() => { try { return JSON.parse(localStorage.getItem(CHATS_KEY) || "[]"); } catch (e) { return []; } })();
 let activeId = localStorage.getItem(ACTIVE_KEY) || null;
 
-// Einmalige Migration der alten Einzel-Historie in einen ersten Chat-Eintrag
 if (chats.length === 0) {
   try {
     const old = JSON.parse(localStorage.getItem(OLD_HIST_KEY) || "[]");
     if (old.length > 0) {
       const firstUser = old.find(m => m.role === "user");
-      chats.push({ id: "migrated", title: makeTitle(firstUser ? firstUser.text : "Unterhaltung"), messages: old });
+      chats.push({ id: "migrated", title: makeTitle(firstUser ? firstUser.text : "Conversation"), messages: old });
       activeId = "migrated";
     }
   } catch (e) {}
   localStorage.removeItem(OLD_HIST_KEY);
 }
 
-function makeTitle(text) {
-  text = (text || "Neue Frage").trim();
-  return text.length > 42 ? text.slice(0, 42) + "…" : text;
-}
+function makeTitle(text) { text = (text || "New question").trim(); return text.length > 42 ? text.slice(0, 42) + "…" : text; }
 function saveChats() { localStorage.setItem(CHATS_KEY, JSON.stringify(chats)); }
-function saveActive() {
-  if (activeId) localStorage.setItem(ACTIVE_KEY, activeId);
-  else localStorage.removeItem(ACTIVE_KEY);
-}
+function saveActive() { if (activeId) localStorage.setItem(ACTIVE_KEY, activeId); else localStorage.removeItem(ACTIVE_KEY); }
 function getActiveChat() { return chats.find(c => c.id === activeId) || null; }
 function ensureActiveChat(firstText) {
   let chat = getActiveChat();
@@ -687,17 +537,12 @@ function ensureActiveChat(firstText) {
   renderHistoryList();
   return chat;
 }
-function pushMessage(msg) {
-  const chat = getActiveChat();
-  if (!chat) return;
-  chat.messages.push(msg);
-  saveChats();
-}
+function pushMessage(msg) { const chat = getActiveChat(); if (!chat) return; chat.messages.push(msg); saveChats(); }
 
 function renderHistoryList() {
   historyListEl.innerHTML = "";
   if (chats.length === 0) {
-    const e = document.createElement("div"); e.className = "history-empty"; e.textContent = "Noch keine Unterhaltungen.";
+    const e = document.createElement("div"); e.className = "history-empty"; e.textContent = "No conversations yet.";
     historyListEl.appendChild(e);
     return;
   }
@@ -716,7 +561,7 @@ function renderAll() {
   const chat = getActiveChat();
   if (!chat || chat.messages.length === 0) {
     const e = document.createElement("div"); e.className = "empty";
-    e.innerHTML = '<div class="big">Wie kann ich Ihnen helfen?</div><div class="small">Wählen Sie eine der Vorschlagsfragen oder fragen Sie selbst.</div>';
+    e.innerHTML = '<div class="big">How can I help?</div><div class="small">Pick one of the quick topics or just ask your own question.</div>';
     chatEl.appendChild(e);
     return;
   }
@@ -728,7 +573,7 @@ function addUser(text, persist = true) {
   if (persist) ensureActiveChat(text);
   clearEmpty();
   const d = document.createElement("div"); d.className = "turn user";
-  const who = document.createElement("div"); who.className = "who small-caps"; who.textContent = "Sie fragen";
+  const who = document.createElement("div"); who.className = "who small-caps"; who.textContent = "You ask";
   const b = document.createElement("div"); b.className = "body"; b.textContent = text;
   d.appendChild(who); d.appendChild(b);
   chatEl.appendChild(d); chatEl.scrollTop = chatEl.scrollHeight;
@@ -738,8 +583,7 @@ function addTyping() {
   clearEmpty();
   const d = document.createElement("div"); d.className = "turn bot";
   const who = document.createElement("div"); who.className = "who small-caps"; who.textContent = "Mimstein";
-  const b = document.createElement("div"); b.className = "typing-dots";
-  b.innerHTML = "<span></span><span></span><span></span>";
+  const b = document.createElement("div"); b.className = "typing-dots"; b.innerHTML = "<span></span><span></span><span></span>";
   d.appendChild(who); d.appendChild(b);
   chatEl.appendChild(d); chatEl.scrollTop = chatEl.scrollHeight;
   return d;
@@ -769,32 +613,30 @@ function addBot(text, audio, source, persist = true, sources = []) {
   const lbl = document.createElement("span"); lbl.textContent = "Mimstein"; who.appendChild(lbl);
   if (source) {
     const cls = source === "ai" ? "ai" : source === "match" ? "kb" : "fb";
-    const label = source === "ai" ? "KI-Antwort" : source === "match" ? "Wissensbasis" : "Außerhalb";
+    const label = source === "ai" ? "AI answer" : source === "match" ? "Knowledge base" : "Out of scope";
     const s = document.createElement("span"); s.className = "source " + cls; s.textContent = label;
     who.appendChild(s);
   }
-  const playBtn = document.createElement("button"); playBtn.className = "play"; playBtn.type = "button"; playBtn.textContent = "Vorlesen";
-  playBtn.setAttribute("aria-label", "Antwort vorlesen");
+  const playBtn = document.createElement("button"); playBtn.className = "play"; playBtn.type = "button"; playBtn.textContent = "Read aloud";
+  playBtn.setAttribute("aria-label", "Read answer aloud");
   playBtn.addEventListener("click", () => play_(text, audio, d));
   who.appendChild(playBtn);
   d.appendChild(who);
   const b = document.createElement("div"); b.className = "body"; b.innerHTML = renderMarkdown(text); d.appendChild(b);
   if (sources && sources.length > 0) {
     const sl = document.createElement("div"); sl.className = "sources-list";
-    const lbl2 = document.createElement("span"); lbl2.className = "src-label"; lbl2.textContent = "Quellen:"; sl.appendChild(lbl2);
+    const lbl2 = document.createElement("span"); lbl2.className = "src-label"; lbl2.textContent = "Sources:"; sl.appendChild(lbl2);
     const PDF_LABELS = {
-      "MODULHANDBUCH_MASTER_MIM_PO_2024.pdf": "Modulhandbuch MIM PO 2024",
-      "Sommersemester2026.pdf": "Semestertermine SS 2026",
-      "1NEU_Wintersemester2026_27.pdf": "Semestertermine WS 2026/27",
-      "1Neu_Sommersemester_2027.pdf": "Semestertermine SS 2027",
-      "Wintersemester2027_28.pdf": "Semestertermine WS 2027/28",
+      "MODULHANDBUCH_MASTER_MIM_PO_2024.pdf": "Module Handbook MIM PO 2024",
+      "Sommersemester2026.pdf": "Semester dates SS 2026",
+      "1NEU_Wintersemester2026_27.pdf": "Semester dates WS 2026/27",
+      "1Neu_Sommersemester_2027.pdf": "Semester dates SS 2027",
+      "Wintersemester2027_28.pdf": "Semester dates WS 2027/28",
     };
     sources.forEach(url => {
       if (url.startsWith("pdf://")) {
         const filename = url.replace("pdf://", "");
-        const span = document.createElement("span");
-        span.textContent = PDF_LABELS[filename] || filename;
-        sl.appendChild(span);
+        const span = document.createElement("span"); span.textContent = PDF_LABELS[filename] || filename; sl.appendChild(span);
       } else {
         const clean = url.replace(/^https?:\/\/(www\.)?/,"").replace(/\/$/,"");
         const a = document.createElement("a"); a.href = url; a.target = "_blank"; a.rel = "noopener";
@@ -814,24 +656,7 @@ function ask(query) {
   addUser(query);
   inputEl.value = ""; autosize(); updateSendState();
   const typingEl = addTyping();
-  // Statisches QA-Matching deaktiviert: jede getippte Frage geht jetzt
-  // direkt an die KI (Groq + RAG), damit echte KI-Antworten statt
-  // vorgefertigter Standardantworten kommen. QA-Array bleibt fuer die
-  // Vorschlags-Chips (findByChip) erhalten.
-  // const match = findAnswer(query);
-  // if (match) {
-  //   setTimeout(() => {
-  //     typingEl.remove();
-  //     const bot = addBot(match.answer, match.audio, "match");
-  //     if (audioOn) play(match.answer, match.audio, bot.wrap);
-  //   }, 450);
-  //   return;
-  // }
-  fetch("/api/chat", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ message: query }),
-  })
+  fetch("/api/chat", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ message: query }) })
     .then(r => (r.ok ? r.json() : Promise.reject(new Error("api error"))))
     .then(data => {
       typingEl.remove();
@@ -849,16 +674,9 @@ function askByChip(chipId) {
   if (!item) return;
   addUser(chipLabel(chipId));
   const typingEl = addTyping();
-  setTimeout(() => {
-    typingEl.remove();
-    const bot = addBot(item.answer, item.audio, "match");
-    if (audioOn) play(item.answer, item.audio, bot.wrap);
-  }, 450);
+  setTimeout(() => { typingEl.remove(); const bot = addBot(item.answer, item.audio, "match"); if (audioOn) play(item.answer, item.audio, bot.wrap); }, 450);
 }
-function chipLabel(id) {
-  for (const b of document.querySelectorAll(".chip")) if (b.dataset.q === id) return b.textContent;
-  return id;
-}
+function chipLabel(id) { for (const b of document.querySelectorAll(".chip")) if (b.dataset.q === id) return b.textContent; return id; }
 
 function updateSendState() { sendEl.disabled = inputEl.value.trim().length === 0; }
 formEl.addEventListener("submit", (e) => { e.preventDefault(); const q = inputEl.value.trim(); if (q) ask(q); });
@@ -868,7 +686,7 @@ function autosize() { inputEl.style.height = "auto"; inputEl.style.height = Math
 $("suggestions").addEventListener("click", (e) => { const b = e.target.closest(".chip"); if (!b) return; askByChip(b.dataset.q); });
 $("resetChat").addEventListener("click", () => {
   if (!getActiveChat()) return;
-  if (!confirm("Diese Unterhaltung wirklich löschen?")) return;
+  if (!confirm("Really delete this conversation?")) return;
   chats = chats.filter(c => c.id !== activeId);
   activeId = null;
   saveChats(); saveActive();
