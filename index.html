@@ -475,7 +475,7 @@ async function play(text, audioPath, msgEl) {
   if (!audioOn) return;
   stopAudio();
   if (msgEl) msgEl.classList.add("playing");
-  const src = audioPath || await fetchTTSUrl(text);
+  const src = await fetchTTSUrl(text);
   if (src) {
     const a = new Audio(src);
     currentAudio = a;
