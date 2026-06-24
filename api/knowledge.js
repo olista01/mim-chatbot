@@ -1,162 +1,169 @@
-// Wissensbasis fuer den Gemini/Groq-gestuetzten Chat-Fallback.
-// Direkt als String eingebettet (statt per fs gelesen), damit Vercel
-// das File beim Bundling der Serverless Function garantiert mitnimmt.
+// Knowledge base for the Groq-backed chat fallback.
+// Embedded directly as a string (instead of being read via fs) so that
+// Vercel definitely bundles it with the serverless function.
 module.exports = `
-# Wissensbasis: Industrial Management - Master of Science (M. Sc.)
-## Hochschule Pforzheim | Fakultaet fuer Technik
+# Knowledge base: Industrial Management - Master of Science (M.Sc.)
+## Pforzheim University | School of Engineering
 
-## Ueberblick
-Der Masterstudiengang Industrial Management ist ein interdisziplinaerer Master fuer
-Ingenieure und BWLer. Motto: "Verantwortung uebernehmen und gestalten - Menschen
-zusammenbringen - Technik und Management verbinden." Angeboten von der Fakultaet
-fuer Technik (Tech PF), "powered by Engineering and Management". Zwei Varianten:
-Industrial Management (deutsch/englisch) und Industrial Management - English Track
-(vollstaendig auf Englisch, fuer internationale Studierende).
+## Overview
+The Master's programme in Industrial Management is an interdisciplinary master
+for engineers and business graduates. Motto: "Taking responsibility and shaping
+the future - bringing people together - combining technology and management."
+Offered by the School of Engineering (Tech PF), "powered by Engineering and
+Management." Two variants are available: Industrial Management (German/English)
+and Industrial Management - English Track (entirely in English, for
+international students).
 
-## Eckdaten
-Abschluss: Master of Science (M.Sc.). Vollzeitstudium. Studienbeginn: Sommer- und
-Wintersemester. 24 Studienplaetze. Unterrichtssprache Deutsch und Englisch.
-Zulassung per Auswahlverfahren. 90 ECTS Credits. Regelstudienzeit 3 Semester
-(inkl. Thesis).
+## Key facts
+Degree: Master of Science (M.Sc.). Full-time programme. Start: both summer and
+winter semester. 24 study places. Language of instruction: German and English.
+Admission by selection procedure. 90 ECTS credits. Standard duration: 3
+semesters (including thesis).
 
-## Bewerbungsfristen
-Sommersemester: Bewerbungsschluss 15. Januar. Wintersemester: Bewerbungsschluss
-15. Juni (WS 2026/2027: Frist endete am 15.06.2026). Bewerbungsportal:
+## Application deadlines
+Summer semester: application deadline 15 January. Winter semester: application
+deadline 15 June (WS 2026/2027 deadline ended on 15 June 2026). Application
+portal:
 https://campus.hs-pforzheim.de/qisserver/pages/psv/selbstregistrierung/pub/selbstregistrierung.xhtml
 
-## Studieninhalte
-Technologie- und Innovationsmanagement, Leadership, Prozess- und Daten Management,
-Vernetzte Systeme & Kuenstliche Intelligenz.
+## Curriculum topics
+Technology and Innovation Management, Leadership, Process and Data Management,
+Networked Systems & Artificial Intelligence.
 
-## Besonderheiten
-Interdisziplinaerer Master fuer Ingenieure & technische BWLer. Aufbau von
-Zusatzqualifikationen. Praxisbezug, anwendungsnahe Projekte. Vielfaeltige
-Wahlpflichtfaecher. Auslandssemester an Partneruniversitaet weltweit moeglich.
+## Distinctive features
+Interdisciplinary master for engineers and technically-oriented business
+graduates. Builds additional qualifications. Strong practical focus,
+application-driven projects. Wide range of electives. Exchange semester at
+partner universities worldwide is possible.
 
-## Studienverlauf (3 Semester)
-1. Semester: Pflichtmodule Leadership, Vernetzte Systeme und Kuenstliche
-Intelligenz, Forschungsmethoden und Innovation. Ueber 1./2. Semester laufen
-interdisziplinaeres Innovationsprojekt, Wahlpflichtfaecher Fokus, gewaehlter
-Major. 2. Semester: zusaetzlich Technologiemanagement mit Verhandlungsfuehrung,
-Prozesse und Daten. 3. Semester: Capstone-Seminar und Master-Thesis.
+## Study plan (3 semesters)
+1st semester: compulsory modules Leadership, Networked Systems and Artificial
+Intelligence, Research Methods and Innovation. Spanning the 1st/2nd semester:
+the Interdisciplinary Innovation Project, the Electives "Focus" and the chosen
+Major. 2nd semester: additionally Technology Management with Negotiation, and
+Processes and Data. 3rd semester: Capstone seminar and Master Thesis.
 
 ## Majors
-Major Engineering (7a): fuer Studierende ohne technisches Bachelorstudium.
-Major Business (7b): fuer Studierende mit technischem Bachelor, vermittelt BWL-
-Grundlagen. Major Industrial Management Zwei (7c): fuer Wirtschaftsingenieure
-mit beiden Vorqualifikationen. Wahl haengt von Eingangsqualifikation ab, wird in
-verbindlicher Studienvereinbarung mit Studiengangsleitung festgelegt.
+Major Engineering (7a): for students without a technical bachelor's degree.
+Major Business (7b): for students with a technical bachelor's degree, teaches
+business foundations. Major Industrial Management Two (7c): for industrial
+engineering graduates who already have both backgrounds. The choice depends on
+your entry qualification and is fixed in a binding study agreement with the
+programme director.
 
 ## English Track
-Rein englischsprachige Vertiefung, vorrangig fuer Bewerber ohne ausreichende
-Deutschkenntnisse. Bis zu 6 Studienplaetze, Start nur im Wintersemester.
-Kombination englischsprachiger MIM-Vorlesungen mit Veranstaltungen aus dem
-Master Engineering and Management ermoeglicht 90 ECTS auf Englisch.
+A fully English-language specialisation, primarily intended for applicants
+without sufficient German skills. Up to 6 study places, start only in the
+winter semester. Combining English-language MIM lectures with courses from the
+Master of Engineering and Management (MEM) makes 90 ECTS available in English.
 
-## Seminare
+## Seminars
 Seminar Industrial Management B: "Management of Complex, International Projects
-in Aerospace, Aviation and Spaceflight". Dreitaegiger Pflichtkurs bei Dr. Hannes
-Griebel (Fellow Royal Aeronautical Society, Director bei CGI). Themen: Apollo,
-Concorde, ISS, Airbus A380, Artemis-Missionen.
-Seminar Industrial Management A: Six-Sigma-Methodik (DMAIC: Define, Measure,
-Analyze, Improve, Control). Voice of the Customer, SIPOC-Diagramme,
-Hypothesentests, FMEA, Lean-Prinzipien.
+in Aerospace, Aviation and Spaceflight." A three-day compulsory course taught
+by Dr. Hannes Griebel (Fellow of the Royal Aeronautical Society, Director at
+CGI). Topics: Apollo, Concorde, ISS, Airbus A380, Artemis missions.
+Seminar Industrial Management A: Six Sigma methodology (DMAIC: Define, Measure,
+Analyze, Improve, Control). Voice of the Customer, SIPOC diagrams, hypothesis
+testing, FMEA, lean principles.
 
-## Master-Thesis
-24 ECTS, fruehestens im 2. Fachsemester. 70-100 Seiten, selbststaendige
-wissenschaftliche Bearbeitung eines Problems aus dem Wirtschaftsingenieurwesen.
-Betreuende: alle Professorinnen und Professoren des Bereichs.
+## Master Thesis
+24 ECTS, can be started no earlier than the 2nd semester. 70-100 pages,
+independent academic work on a problem from the field of industrial
+engineering. Supervisors: all professors of the department.
 
-## Dozenten und Module
-- KI/Vernetzte Systeme: Prof. Dr. Raphael Volz (KI-Teil, mit Lukas Vaessen:
-  Machine Learning, Transformer, LLMs, ChatGPT, Midjourney, Ethik) und Kollege
-  Koelmel (vernetzte Systeme: IoT, Industrie 4.0, Smart Cities).
-- Leadership: Prof. Dr. Jasmin Mahadevan mit Kollegin Eireiner. Themen:
-  virtuelle Teamzusammenarbeit, Fuehrungsmindset, kulturelle Intelligenz.
-  Applied Leadership bei Eireiner: 5-7-seitige TED-Talks-Reflexion, Abgabe
-  9. Januar per E-Mail.
-- Kostenrechnung und Finanzierung (Major Business): Prof. Harald Schnell.
-  Grundlagen Kostenrechnung, Zielkosten-, Lebenszyklus-, Prozesskosten- und
-  Deckungsbeitragsrechnung, Finanzierung. Deutsch, Start Mittwoch 8. April
-  11:30 Uhr.
-- Technologiemanagement und Verhandlungsfuehrung: Dr.-Ing. Daniel Duwe
-  (Technologie- und Innovationsmanagement, Lehrbeauftragter, Termine
-  ganztaegig 27. Maerz / 24. April / 22. Mai). Verhandlungsteil: Kollege
-  Moritz Peter.
+## Lecturers and modules
+- AI / Networked Systems: Prof. Dr. Raphael Volz (AI part, together with Lukas
+  Vaessen: machine learning, transformers, LLMs, ChatGPT, Midjourney, ethics)
+  and Prof. Koelmel (networked systems: IoT, Industry 4.0, smart cities).
+- Leadership: Prof. Dr. Jasmin Mahadevan with Prof. Eireiner. Topics: virtual
+  team collaboration, leadership mindset, cultural intelligence. Applied
+  Leadership with Eireiner: 5-7 page TED Talks reflection paper, due 9 January
+  by e-mail.
+- Cost Accounting and Financing (Major Business): Prof. Harald Schnell. Basics
+  of cost accounting, target costing, life-cycle costing, activity-based
+  costing and contribution margin accounting, financing. Held in German. Start:
+  Wednesday 8 April, 11:30 a.m.
+- Technology Management and Negotiation: Dr.-Ing. Daniel Duwe (Technology and
+  Innovation Management, lecturer, full-day sessions on 27 March / 24 April /
+  22 May). Negotiation part: Prof. Moritz Peter.
 
-## AI Capstone Project (Sommersemester 2026)
-Betreut von Prof. Dr. Raphael Volz und Moritz Peter. Zwei Aufgaben: 1) ein
-dreiminuetiger Film ueber das MEM- oder MIM-Programm mit generativer KI,
-2) ein Chatbot in der Stimme von Volz oder Peter. Abgabe 24. Juni 2026, 15 Uhr,
-Moodle. Praesentationen ab 15:30 Uhr, je 15 Minuten pro Gruppe.
+## AI Capstone Project (summer semester 2026)
+Supervised by Prof. Dr. Raphael Volz and Moritz Peter. Two tasks: (1) a
+three-minute film about the MEM or MIM programme using generative AI, (2) a
+chatbot in the voice of Volz or Peter. Submission: 24 June 2026, 3 p.m., via
+Moodle. Presentations from 3:30 p.m., 15 minutes per group.
 
-## Pruefungsformen
-PLK = Klausur, PLH = Hausarbeit, PLM = muendliche Pruefung, PLP = Projektarbeit,
-PLR = Referat, PLT = Thesis. UPL = unbenotete Pruefungsleistung (bestanden/nicht
-bestanden).
+## Examination formats
+PLK = written exam, PLH = term paper, PLM = oral exam, PLP = project work,
+PLR = presentation, PLT = thesis. UPL = ungraded examination (pass/fail).
 
-## Ansprechpartner
-Studiengangleiter: Prof. Dr. Ansgar Kuehn (Operations Management, Raum T1.5.23,
-Kolloquium Mi 09:45-11:15, Tel. 07231 28-6490, ansgar.kuehn@hs-pforzheim.de).
-Seit 2024 Studiengangleiter M.Sc. Engineering and Management & Industrial
-Management, seit 2023 Prodekan Wirtschaftsingenieurwesen.
-Studiengangkoordinatorin: Lisa Kaiser (Tel. 07231 28-6472, Raum T1.5.21).
-Sekretariat Wirtschaftsingenieurwesen: Tel. 07231 28-6056.
-Fuer Bewerbungsfristen, Studiengebuehren, Auslandssemester-Termine: an das
-Studiengangsbuero der Fakultaet Engineering der Hochschule Pforzheim verweisen.
+## Contact persons
+Programme director: Prof. Dr. Ansgar Kuehn (Operations Management, room
+T1.5.23, office hours Wed 09:45-11:15, tel. 07231 28-6490,
+ansgar.kuehn@hs-pforzheim.de). Since 2024 programme director M.Sc. Engineering
+and Management & Industrial Management, since 2023 Vice Dean of Industrial
+Engineering.
+Programme coordinator: Lisa Kaiser (tel. 07231 28-6472, room T1.5.21).
+Industrial Engineering office: tel. 07231 28-6056.
+For application deadlines, tuition fees and exchange-semester dates, refer
+visitors to the programme office of the School of Engineering at Pforzheim
+University.
 
-## Akkreditierung
-Juli 2024: alle Studiengaenge der Fakultaet fuer Technik akkreditiert, ohne
-Auflagen. Gelobt wurden Qualitaet der Lehrinhalte, Kompetenz der Dozenten,
-Ausstattung der Lehr- und Forschungseinrichtungen.
+## Accreditation
+July 2024: all programmes of the School of Engineering were successfully
+accredited without any conditions. The quality of the teaching content, the
+expertise of the lecturers and the equipment of the teaching and research
+facilities were highlighted.
 
-## Master-Infotag
-16. April 2026, ab 17:25 Uhr, Hoersaal THB. Vorstellung aller Master-
-Studiengaenge der Fakultaet Technik (u.a. Industrial Management, English Track,
-Advanced Information Technology, Engineering and Management, Information
-Systems, Life Cycle & Sustainability, Mechatronische Systementwicklung,
-Medizintechnik, Produktentwicklung).
+## Master Info Day
+16 April 2026, from 5:25 p.m., lecture hall THB. Presentation of all master
+programmes of the School of Engineering (including Industrial Management,
+English Track, Advanced Information Technology, Engineering and Management,
+Information Systems, Life Cycle & Sustainability, Mechatronic Systems
+Development, Medical Technology, Product Development).
 
-## Hochschule Pforzheim allgemein
-Motto: "Fuehrend durch Perspektivenwechsel". Fakultaeten: Gestaltung, Technik,
-Wirtschaft & Recht. Hauptwebsite: hs-pforzheim.de.
+## Pforzheim University in general
+Motto: "Leading through changing perspectives." Schools: Design, Engineering,
+Business & Law. Main website: hs-pforzheim.de.
 
-## Semestertermine (G = Gestaltung, T = Technik, WR = Wirtschaft und Recht)
+## Semester dates (G = Design, T = Engineering, WR = Business and Law)
 
-### Sommersemester 2026 (Stand 09.10.2024)
-Beginn SS 2026: 01.03.2026. Vorlesungsbeginn: 16.03.2026. Begruessung
-Erstsemester G+T+WR: 16./17.03.2026. Vorlesungsbeginn Erstsemester G, T, WR:
-18.03.2026. Osterferien: 02.04.-07.04.2026 (vorlesungsfrei). Exkursionswoche:
-04.05.-08.05.2026. Christi Himmelfahrt: 14.05.2026 (vorlesungsfrei).
-Pfingstferien G+T+WR: 25.05.-29.05.2026 (vorlesungsfrei). Fronleichnam:
-04.06.2026 (vorlesungsfrei). Letzter Vorlesungstag: 26.06.2026. Klausuren G:
-29.06.-03.07.2026. Klausuren T und WR: 29.06.-10.07.2026. Ende des SS 2026:
-31.08.2026. Vorlesungszeit: 14 Wochen.
+### Summer semester 2026 (as of 09 October 2024)
+Start of SS 2026: 01 March 2026. Lectures start: 16 March 2026. Welcome for
+first-year students G+T+WR: 16/17 March 2026. Lectures for first-year students
+G, T, WR start: 18 March 2026. Easter break: 02-07 April 2026 (no lectures).
+Field trip week: 04-08 May 2026. Ascension Day: 14 May 2026 (no lectures).
+Whitsun break G+T+WR: 25-29 May 2026 (no lectures). Corpus Christi: 04 June
+2026 (no lectures). Last lecture day: 26 June 2026. Exams G: 29 June -
+03 July 2026. Exams T and WR: 29 June - 10 July 2026. End of SS 2026:
+31 August 2026. Lecture period: 14 weeks.
 
-### Wintersemester 2026/27 (Stand 19.05.2026)
-Beginn WS 2026/27: 01.09.2026. Vorlesungsbeginn: 05.10.2026. Begruessung
-Erstsemester G+T+WR: 05.10.2026. Allerheiligen: 01.11.2026 (vorlesungsfrei).
-Weihnachtsferien: 23.12.2026-06.01.2027 (vorlesungsfrei). Letzter
-Vorlesungstag: 22.01.2027. Klausuren G: 25.01.-29.01.2027. Klausuren T und WR:
-25.01.-05.02.2027. Ende des WS 2026/27: 28.02.2027. Vorlesungszeit: 15 Wochen.
+### Winter semester 2026/27 (as of 19 May 2026)
+Start of WS 2026/27: 01 September 2026. Lectures start: 05 October 2026.
+Welcome for first-year students G+T+WR: 05 October 2026. All Saints' Day:
+01 November 2026 (no lectures). Christmas break: 23 December 2026 - 06 January
+2027 (no lectures). Last lecture day: 22 January 2027. Exams G: 25 - 29 January
+2027. Exams T and WR: 25 January - 05 February 2027. End of WS 2026/27:
+28 February 2027. Lecture period: 15 weeks.
 
-### Sommersemester 2027 (Stand 19.05.2026)
-Beginn SS 2027: 01.03.2027. Vorlesungsbeginn: 15.03.2027. Begruessung
-Erstsemester G+T+WR: 15.03.2027. Osterferien: 25.03.-30.03.2027
-(vorlesungsfrei). Exkursionswoche: 10.05.-14.05.2027. Christi Himmelfahrt:
-06.05.2027 (vorlesungsfrei). Pfingstferien G+T+WR: 18.05.-21.05.2027
-(vorlesungsfrei). Fronleichnam: 27.05.2027 (vorlesungsfrei). Letzter
-Vorlesungstag: 25.06.2027. Klausuren G: 28.06.-02.07.2027. Klausuren T und WR:
-28.06.-09.07.2027. Ende des SS 2027: 31.08.2027. Vorlesungszeit: 14 Wochen.
+### Summer semester 2027 (as of 19 May 2026)
+Start of SS 2027: 01 March 2027. Lectures start: 15 March 2027. Welcome for
+first-year students G+T+WR: 15 March 2027. Easter break: 25-30 March 2027
+(no lectures). Field trip week: 10-14 May 2027. Ascension Day: 06 May 2027 (no
+lectures). Whitsun break G+T+WR: 18-21 May 2027 (no lectures). Corpus Christi:
+27 May 2027 (no lectures). Last lecture day: 25 June 2027. Exams G: 28 June -
+02 July 2027. Exams T and WR: 28 June - 09 July 2027. End of SS 2027: 31 August
+2027. Lecture period: 14 weeks.
 
-### Wintersemester 2027/28 (Stand 25.03.2026)
-Beginn WS 2027/28: 01.09.2027. Vorlesungsbeginn: 04.10.2027. Begruessung
-Erstsemester G+T+WR: 04.10.2027. Allerheiligen: 01.11.2027 (vorlesungsfrei).
-Weihnachtsferien: 23.12.2027-07.01.2028 (vorlesungsfrei). Letzter
-Vorlesungstag: 28.01.2028. Klausuren G: 31.01.-04.02.2028. Klausuren T und WR:
-31.01.-11.02.2028. Ende des WS 2027/28: 28.02.2028. Vorlesungszeit: 14 Wochen.
-Beginn SS 2028: 01.03.2028. Vorlesungsbeginn SS 2028: 13.03.2028.
+### Winter semester 2027/28 (as of 25 March 2026)
+Start of WS 2027/28: 01 September 2027. Lectures start: 04 October 2027.
+Welcome for first-year students G+T+WR: 04 October 2027. All Saints' Day:
+01 November 2027 (no lectures). Christmas break: 23 December 2027 - 07 January
+2028 (no lectures). Last lecture day: 28 January 2028. Exams G: 31 January -
+04 February 2028. Exams T and WR: 31 January - 11 February 2028. End of WS
+2027/28: 28 February 2028. Lecture period: 14 weeks. Start of SS 2028:
+01 March 2028. Lectures start SS 2028: 13 March 2028.
 
-Hinweis: Aenderungen an diesen Terminen vorbehalten, fuer den aktuellsten
-Stand auf das Studiengangsbuero verweisen.
+Note: These dates are subject to change. For the most up-to-date information
+refer visitors to the programme office.
 `;
